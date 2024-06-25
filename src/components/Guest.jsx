@@ -1,1 +1,12 @@
-import '../styles.Guest.css'
+import '../styles/Guest.css'
+const Guest = () => {
+    
+
+    
+    
+    
+    return 
+
+}
+
+export default Guest;

@@ -1,8 +1,7 @@
 import {useState} from "react"
 
 
-
-export function LoginForm(){
+const LoginForm = () => {
     
     const [user, setUSer] = useState("")
     const [password, setPassword] = useState("")
@@ -37,3 +36,5 @@ export function LoginForm(){
         
     </section>
 }
+
+export default LoginForm;

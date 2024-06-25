@@ -5,10 +5,8 @@ import Guest from './components/Guest'
 import Header from './components/Header'
 import LoginForm from './components/LoginForm'
 import Room from './components/Room'
-import './App.css'
 import React from 'react';
 import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
-import Menu from './components/Menu'
 
 function App() {
 

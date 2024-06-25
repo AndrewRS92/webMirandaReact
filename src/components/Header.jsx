@@ -15,8 +15,8 @@ const Header = () => {
         return pathSegments[0];
       };
     return (
-      <div>
-        <h1>{getPageName(location.pathname)}</h1>
+      <div className="header">
+        <nav>{getPageName(location.pathname)}</nav>
     <div className="dropdown">
         <button  onClick={toggleMenu}>Menú</button>
         {isMenuVisible && (<Menu />)}

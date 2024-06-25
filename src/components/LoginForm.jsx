@@ -33,9 +33,7 @@ export function LoginForm(){
         />
         <button>Login</button>
 
-
-
     </form>
-
+        
     </section>
 }

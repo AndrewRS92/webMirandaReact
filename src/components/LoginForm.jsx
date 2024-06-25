@@ -1,8 +1,7 @@
 import {useState} from "react"
 
 
-
-export function LoginForm(){
+const LoginForm = () => {
     
     const [user, setUSer] = useState("")
     const [password, setPassword] = useState("")
@@ -33,9 +32,9 @@ export function LoginForm(){
         />
         <button>Login</button>
 
-
-
     </form>
-
+        
     </section>
 }
+
+export default LoginForm;

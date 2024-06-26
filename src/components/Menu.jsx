@@ -4,7 +4,6 @@ import { Outlet, Link } from 'react-router-dom';
 const Menu = () => {
     return (
 <div>
-      <h2>Menu</h2>
       <nav>
         <ul>
           <li>

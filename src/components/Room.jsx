@@ -1,9 +1,6 @@
 import '../styles/Room.css'
 const Room = () => {
     
-
-    
-    
     
     return 
 

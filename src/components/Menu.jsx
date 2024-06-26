@@ -1,34 +1,43 @@
 
-import { Outlet, Link } from 'react-router-dom';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import {
+  MenuContainer,
+  MenuNav,
+  MenuList,
+  MenuItem,
+  MenuLink
+} from './styleComponents/MenuStyles';
 
 const Menu = () => {
-    return (
-<div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="Room">Room</Link>
-          </li>
-          <li>
-            <Link to="Bookings">Bookings</Link>
-          </li>
-          <li>
-            <Link to="Guest">Guest</Link>
-          </li>
-          <li>
-            <Link to="Concierge">Concierge</Link>
-          </li>
-        </ul>
-      </nav>
+  return (
+    <MenuContainer>
+      <MenuNav>
+        <MenuList>
+          <MenuItem>
+            <MenuLink to="/">Dashboard</MenuLink>
+          </MenuItem>
+          <MenuItem>
+            <MenuLink to="Room">Room</MenuLink>
+          </MenuItem>
+          <MenuItem>
+            <MenuLink to="Bookings">Bookings</MenuLink>
+          </MenuItem>
+          <MenuItem>
+            <MenuLink to="Guest">Guest</MenuLink>
+          </MenuItem>
+          <MenuItem>
+            <MenuLink to="Concierge">Concierge</MenuLink>
+          </MenuItem>
+        </MenuList>
+      </MenuNav>
       <Outlet />
-    </div>
-    );
-  };
-  
-  export default Menu;
+    </MenuContainer>
+  );
+};
+
+export default Menu;
+
 
 
 

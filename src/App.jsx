@@ -7,19 +7,9 @@ import Guest from './components/Guest';
 import Header from './components/Header';
 import LoginForm from './components/LoginForm';
 import Room from './components/Room';
-import Menu from './components/Menu';
-import styled from 'styled-components';
-import { LayoutContainer, MainContent, PageContent } from './components/styleComponents/LayoutStyles';
+import { LayoutContainer, MainContent, HeaderContainer, PageContentWrapper } from './components/styleComponents/LayoutStyles';
 
 
-const PageContentWrapper = styled.div`
-  margin-top: 60px;
-  padding-left: ${props => (props.isMenuVisible ? '250px' : '0')};
-  transition: padding-left 0.3s ease;
-`;
-const HeaderContainer = styled.div`
-  flex: 0 0 auto;
-`;
 
 
 const App = () => {

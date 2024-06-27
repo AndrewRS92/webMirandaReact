@@ -23,3 +23,13 @@ export const PageContent = styled.div`
   padding: 1rem;
   background-color: white;
 `;
+
+
+export const PageContentWrapper = styled.div`
+  margin-top: 60px;
+  padding-left: ${props => (props.isMenuVisible ? '250px' : '0')};
+  transition: padding-left 0.3s ease;
+`;
+export const HeaderContainer = styled.div`
+  flex: 0 0 auto;
+`;

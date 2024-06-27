@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 
 export const MenuContainer = styled.div`
   width: 250px;
-  background-color: #fff;
   height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 11;
   box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    display: flex;
+  flex-direction: column;
+  padding: 20px;
 `;
 
 export const MenuNav = styled.nav`
@@ -32,7 +30,9 @@ export const MenuLink = styled(Link)`
   font-size: 18px;
   padding: 10px 20px;
   display: block;
+     margin-bottom: 10px;
+  text-decoration: none;
   &:hover {
-    background-color: #f5f5f5;
+    text-decoration: underline;
   }
 `;

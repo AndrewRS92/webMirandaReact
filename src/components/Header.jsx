@@ -13,6 +13,7 @@ import {
   Dropdown,
   Search,
   SearchWrapper,
+  MenuWrapper,
   MenuIcon,
   SearchInput,
   SearchIcon,
@@ -32,13 +33,14 @@ const Header = () => {
     return pathSegments[0];
   };
   return (
+    <>
     <HeaderContainer>
+      
       <Nav>{getPageName(location.pathname)}</Nav>
+     
       <Dropdown>
-        <MenuIcon onClick={toggleMenu} />
-        {isMenuVisible && (<Menu />)}
-      </Dropdown>
-
+          <MenuIcon onClick={toggleMenu} />
+        </Dropdown>
       <Search>
         <SearchWrapper>
           <SearchInput type="text" />
@@ -51,6 +53,10 @@ const Header = () => {
         <BiCommentDetail className="icon" />
       </Icons>
     </HeaderContainer>
+     <MenuWrapper isMenuVisible={isMenuVisible}>
+     <Menu />
+   </MenuWrapper>
+   </>
   );
 };
 

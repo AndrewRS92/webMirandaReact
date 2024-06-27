@@ -11,7 +11,6 @@ import {
 
 const Bookings = () => {
     const [tableData, setTableData] = useState([]);
-    const [isMenuVisible, setIsMenuVisible] = useState(false);
 
     useEffect(() => {
       fetch('/BookingsData.json')

@@ -12,10 +12,10 @@ export const HeaderContainer = styled.div`
   background-color: white;
   position: fixed;
   top: 0;
-  width: 100%;
+  width: calc(100% - 15.625rem);
   color: black;
-  margin-left: 15.625rem;
   z-index: 10;
+  padding: 10px 20px;
 `;
 
 export const Nav = styled.nav`
@@ -69,7 +69,6 @@ export const SearchInput = styled.input`
   border: 0.0625rem solid #ccc;
   outline: none;
   box-sizing: border-box;
-  color: black;
 `;
 
 export const SearchIcon = styled(IoIosSearch)`
@@ -84,4 +83,15 @@ export const SearchIcon = styled(IoIosSearch)`
 export const Icons = styled.div`
   display: flex;
   gap: 1.25rem;
+`;
+
+export const MenuWrapper = styled.div`
+  display: ${props => (props.isMenuVisible ? 'flex' : 'none')};
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 60px);
+  z-index: 1000;
 `;

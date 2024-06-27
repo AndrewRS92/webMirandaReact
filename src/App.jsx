@@ -8,37 +8,50 @@ import Header from './components/Header';
 import LoginForm from './components/LoginForm';
 import Room from './components/Room';
 import Menu from './components/Menu';
+import styled from 'styled-components';
 import { LayoutContainer, MainContent, PageContent } from './components/styleComponents/LayoutStyles';
 
-function App() {
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+const PageContentWrapper = styled.div`
+  margin-top: 60px;
+  padding-left: ${props => (props.isMenuVisible ? '250px' : '0')};
+  transition: padding-left 0.3s ease;
+`;
+const HeaderContainer = styled.div`
+  flex: 0 0 auto;
+`;
+
+
+const App = () => {
+  const [isMenuVisible, setMenuVisible] = useState([]);
+
   const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
+    setMenuVisible(!isMenuVisible);
   };
 
   return (
     <div className="App">
       <Router>
         <LayoutContainer>
-          <Header toggleMenu={toggleMenu} isMenuVisible={isMenuVisible} />
+          <HeaderContainer>
+            <Header toggleMenu={toggleMenu}/>
+          </HeaderContainer>
           <MainContent>
-            {isMenuVisible && <Menu />}
-            <PageContent>
+            <PageContentWrapper>
               <Routes>
                 <Route exact path="/" element={<Dashboard />} />
-                <Route path="Concierge" element={<Concierge />} />
-                <Route path="Bookings" element={<Bookings />} />
-                <Route path="Guest" element={<Guest />} />
-                <Route path="LoginForm" element={<LoginForm />} />
-                <Route path="Room" element={<Room />} />
+                <Route path="/Concierge" element={<Concierge />} />
+                <Route path="/Bookings" element={<Bookings />} />
+                <Route path="/Guest" element={<Guest />} />
+                <Route path="/LoginForm" element={<LoginForm />} />
+                <Route path="/Room" element={<Room />} />
               </Routes>
-            </PageContent>
+            </PageContentWrapper>
           </MainContent>
         </LayoutContainer>
       </Router>
     </div>
   );
-}
+};
 
 export default App;
-

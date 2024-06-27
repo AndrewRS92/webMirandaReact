@@ -11,7 +11,7 @@ import {
 
 const Menu = () => {
   return (
-    <MenuContainer>
+    <>
       <MenuNav>
         <MenuList>
           <MenuItem>
@@ -32,7 +32,7 @@ const Menu = () => {
         </MenuList>
       </MenuNav>
       <Outlet />
-    </MenuContainer>
+    </>
   );
 };
 

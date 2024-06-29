@@ -1,82 +1,109 @@
-
 import React, { useState, useEffect } from 'react';
 import {
-    Table,
-    Td,
-    Th,
-    NotesButton,
-    StatusLabel
-  } from '../components/styleComponents/BookingTableStyles';
-
+  Table,
+  TableContainer,
+  TableHead,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableCell,
+  NotesButton,
+  StatusLabel,
+  FilterBar,
+  FilterOption
+} from '../components/styleComponents/BookingTableStyles';
 
 const Bookings = () => {
-    const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState([]);
+  const [filter, setFilter] = useState('all');
 
-    useEffect(() => {
-      fetch('/BookingsData.json')
-        .then(response => response.json())
-        .then(data => setTableData(data))
-        .catch(error => console.error('Error fetching data:', error));
-    }, []);
-  
-    const getStatusLabel = (status) => {
-      switch (status) {
-        case 0:
-          return "Pending";
-        case 1:
-          return "Booked";
-        case 2:
-          return "Cancelled";
-        case 3:
-          return "Refunded";
-        default:
-          return "";
-      }
-    };
-  
-    const getStatusClass = (status) => {
-      switch (status) {
-        case 0:
-          return "status-pending";
-        case 1:
-          return "status-booked";
-        case 2:
-          return "status-cancelled";
-        case 3:
-          return "status-refunded";
-        default:
-          return "";
-      }
-    };
-  
-    return (
-      <Table>
-        <thead>
-          <tr>
-            <Th>Guest</Th>
-            <Th>Order Date</Th>
-            <Th>Check In</Th>
-            <Th>Check Out</Th>
-            <Th>Special Request</Th>
-            <Th>Room Type</Th>
-            <Th>Status</Th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((row, index) => (
-            <tr key={index}>
-                 <Td>{`${row.first_name} ${row.last_name}`}</Td>
-            <Td>{row.order_date}</Td>
-            <Td>{row.checkin_date}</Td>
-            <Td>{row.checkout_date}</Td>
-            <Td><NotesButton>View Notes</NotesButton></Td>
-            <Td>{row.room_type}</Td>
-            <Td><StatusLabel className={getStatusClass(row.status)}>{getStatusLabel(row.status)}</StatusLabel></Td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
+  useEffect(() => {
+    fetch('/BookingsData.json')
+      .then(response => response.json())
+      .then(data => setTableData(data))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case 0:
+        return "Pending";
+      case 1:
+        return "Booked";
+      case 2:
+        return "Cancelled";
+      case 3:
+        return "Refunded";
+      default:
+        return "";
+    }
   };
-  
-  export default Bookings;
+
+  const getStatusClass = (status) => {
+    switch (status) {
+      case 0:
+        return "status-pending";
+      case 1:
+        return "status-booked";
+      case 2:
+        return "status-cancelled";
+      case 3:
+        return "status-refunded";
+      default:
+        return "";
+    }
+  };
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+  };
+
+  const filteredData = tableData.filter(row => {
+    if (filter === 'all') return true;
+    return getStatusLabel(row.status).toLowerCase() === filter;
+  });
+
+  return (
+    <TableContainer>
+      <FilterBar>
+        <FilterOption className={filter === 'all' ? 'active' : ''} onClick={() => handleFilterChange('all')}>All Guest</FilterOption>
+        <FilterOption className={filter === 'pending' ? 'active' : ''} onClick={() => handleFilterChange('pending')}>Pending</FilterOption>
+        <FilterOption className={filter === 'booked' ? 'active' : ''} onClick={() => handleFilterChange('booked')}>Booked</FilterOption>
+        <FilterOption className={filter === 'cancelled' ? 'active' : ''} onClick={() => handleFilterChange('cancelled')}>Cancelled</FilterOption>
+        <FilterOption className={filter === 'refunded' ? 'active' : ''} onClick={() => handleFilterChange('refunded')}>Refunded</FilterOption>
+      </FilterBar>
+      <Table>
+        <TableHead>
+          <tr>
+            <TableHeader>Guest</TableHeader>
+            <TableHeader>Order Date</TableHeader>
+            <TableHeader>Check In</TableHeader>
+            <TableHeader>Check Out</TableHeader>
+            <TableHeader>Special Request</TableHeader>
+            <TableHeader>Room Type</TableHeader>
+            <TableHeader>Status</TableHeader>
+          </tr>
+        </TableHead>
+        <TableBody>
+          {filteredData.map((row, index) => (
+            <TableRow key={index}>
+              <TableCell>{`${row.first_name} ${row.last_name}`}</TableCell>
+              <TableCell>{row.order_date}</TableCell>
+              <TableCell>{row.checkin_date}</TableCell>
+              <TableCell>{row.checkout_date}</TableCell>
+              <TableCell><NotesButton>View Notes</NotesButton></TableCell>
+              <TableCell>{row.room_type}</TableCell>
+              <TableCell>
+                <StatusLabel className={getStatusClass(row.status)}>
+                  {getStatusLabel(row.status)}
+                </StatusLabel>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};
+
+export default Bookings;

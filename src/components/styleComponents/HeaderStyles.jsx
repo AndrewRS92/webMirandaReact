@@ -14,14 +14,16 @@ export const HeaderContainer = styled.div`
   top: 0;
   width: calc(100% - 15.625rem);
   color: black;
-  z-index: 10;
-  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  margin-left: 8rem;
 `;
 
 export const Nav = styled.nav`
   font-size: 1.5rem;
   font-weight: bold;
   background-color: white;
+  position: absolute;
+  margin-left: 8rem;
 `;
 
 export const Dropdown = styled.div`
@@ -91,5 +93,5 @@ export const MenuWrapper = styled.div`
   position: absolute;
   top: 60px;
   left: 0;
-  width: 250px;
+  width: 15.625rem;
 `;

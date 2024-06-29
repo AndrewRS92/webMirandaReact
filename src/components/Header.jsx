@@ -36,17 +36,18 @@ const Header = () => {
     <>
     <HeaderContainer>
       
-      <Nav>{getPageName(location.pathname)}</Nav>
-     
-      <Dropdown>
+    <Dropdown>
           <MenuIcon onClick={toggleMenu} />
         </Dropdown>
-      <Search>
+      <Nav>{getPageName(location.pathname)}</Nav>
+     
+
+      {/* <Search>
         <SearchWrapper>
           <SearchInput type="text" />
           <SearchIcon />
         </SearchWrapper>
-      </Search>
+      </Search> */}
       <Icons>
         <FaRegEnvelope className="icon" />
         <GoBell className="icon" />

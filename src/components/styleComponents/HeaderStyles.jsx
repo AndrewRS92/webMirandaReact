@@ -92,6 +92,4 @@ export const MenuWrapper = styled.div`
   top: 60px;
   left: 0;
   width: 250px;
-  height: calc(100vh - 60px);
-  z-index: 1000;
 `;

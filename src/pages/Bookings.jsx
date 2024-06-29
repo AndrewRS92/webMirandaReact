@@ -6,7 +6,7 @@ import {
     Th,
     NotesButton,
     StatusLabel
-  } from './styleComponents/BookingTableStyles';
+  } from '../components/styleComponents/BookingTableStyles';
 
 
 const Bookings = () => {

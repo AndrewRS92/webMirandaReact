@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
-import Bookings from './components/Bookings';
-import Concierge from './components/Concierge';
-import Guest from './components/Guest';
+import Dashboard from './pages/Dashboard';
+import Bookings from './pages/Bookings';
+import Concierge from './pages/Concierge';
+import Guest from './pages/Guest';
 import Header from './components/Header';
 import LoginForm from './components/LoginForm';
 import Room from './components/Room';

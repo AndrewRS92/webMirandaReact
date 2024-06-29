@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const TableContainer = styled.div`
   margin: 2rem;
-  margin-left: 11rem;
+  margin-left: 18rem;
 `;
 
 export const Table = styled.table`
@@ -19,7 +19,6 @@ export const TableHeader = styled.th`
   padding: 1.2rem;
   text-align: left;
   color: #686868;
-  font-family: Arial, sans-serif;
   font-weight: bold;
 `;
 
@@ -37,7 +36,6 @@ export const TableCell = styled.td`
   padding: 0.8rem;
   text-align: left;
   color: black;
-  font-family: Arial, sans-serif;
 `;
 
 export const NotesButton = styled.button`
@@ -46,14 +44,12 @@ export const NotesButton = styled.button`
   padding: 0.5rem;
   cursor: pointer;
   color: black;
-  font-family: Arial, sans-serif;
 `;
 
 export const StatusLabel = styled.span`
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   color: #fff;
-  font-family: Arial, sans-serif;
 
   &.status-pending {
     background-color: #f0ad4e;

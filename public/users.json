@@ -27,12 +27,12 @@
     "id":"2",
     "photo":"image3.png",
     "name":"Mirian Saldias",
-    "email":"lia@gmail.com",
+    "email":"mimi@gmail.com",
     "workstation ":"reception",
     "number_phone":"666666666", 
-    "start_date":"27/01/2024",
+    "start_date":"10/01/2024",
     "description":"Consectetur adipiscing elit", 
-    "state": true, 
+    "state": false, 
     "password":"1234"
 }
 ]

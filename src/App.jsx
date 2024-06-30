@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
@@ -7,7 +6,7 @@ import Concierge from './pages/Concierge';
 import Guest from './pages/Guest';
 import Header from './components/Header';
 import LoginForm from './components/LoginForm';
-import Room from './components/Room';
+import Room from './pages/Room';
 import { LayoutContainer, MainContent, HeaderContainer, PageContentWrapper } from './components/styleComponents/LayoutStyles';
 
 const App = () => {

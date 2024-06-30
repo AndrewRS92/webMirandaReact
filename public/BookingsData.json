@@ -9,7 +9,7 @@
         "note": "Special request note",
         "roomtype": "Single Bed",
         "roomid": 1,
-        "status": "Check Out"
+        "status": "Check In"
     },
     {
         "guest": "Jane Smith",
@@ -21,7 +21,7 @@
         "note": null,
         "roomtype": "Double Bed",
         "roomid": 2,
-        "status": "Check Out"
+        "status": "Check In"
     },
     {
         "guest": "Robert Johnson",
@@ -93,7 +93,7 @@
         "note": "Vegetarian meals",
         "roomtype": "Suite",
         "roomid": 8,
-        "status": "Check Out"
+        "status": "Check In"
     },
     {
         "guest": "James Rodriguez",

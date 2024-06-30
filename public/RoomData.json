@@ -417,7 +417,7 @@
             "LED TV",
             "Wifi"
         ],
-        "available": true
+        "available": false
     },
     {
         "id": 20,
@@ -543,7 +543,7 @@
             "LED TV",
             "Wifi"
         ],
-        "available": true
+        "available": false
     },
     {
         "id": 26,
@@ -564,7 +564,7 @@
             "LED TV",
             "Wifi"
         ],
-        "available": true
+        "available": false
     },
     {
         "id": 27,
@@ -585,7 +585,7 @@
             "LED TV",
             "Wifi"
         ],
-        "available": true
+        "available": false
     },
     {
         "id": 28,

@@ -1,3 +1,4 @@
+// src/components/styleComponents/BookingTableStyles.js
 import styled from 'styled-components';
 
 export const TableContainer = styled.div`
@@ -46,28 +47,6 @@ export const NotesButton = styled.button`
   color: black;
 `;
 
-export const StatusLabel = styled.span`
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  color: #fff;
-
-  &.status-pending {
-    background-color: #f0ad4e;
-  }
-
-  &.status-booked {
-    background-color: #5cb85c;
-  }
-
-  &.status-cancelled {
-    background-color: #d9534f;
-  }
-
-  &.status-refunded {
-    background-color: #5bc0de;
-  }
-`;
-
 export const FilterBar = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -114,3 +93,34 @@ export const FilterOption = styled.button`
   }
 `;
 
+export const BookingStatus = styled.p`
+  width: 6em;
+  text-align: center;
+  padding: 0.5em;
+  font-weight: 300;
+  border-radius: 0.5em;
+  ${({ status }) => {
+    switch (status.toLowerCase()) {
+      case 'check in':
+        return `
+          color: #5AD07A;
+          font-weight: bold;
+          background-color: #E8FFEE;
+        `;
+      case 'check out':
+        return `
+          color: #E23428;
+          font-weight: bold;
+          background-color: #FF766655;
+        `;
+      case 'in progress':
+        return `
+          color: #B8860B;
+          font-weight: bold;
+          background-color: #FFFACD;
+        `;
+      default:
+        return '';
+    }
+  }}
+`;

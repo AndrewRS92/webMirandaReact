@@ -9,27 +9,35 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchBookings = async () => {
-      const response = await fetch('/BookingsData.json');
-      const allbookings = await response.json();
-      setBookings(allbookings);
+      try {
+        const response = await fetch('/BookingsData.json');
+        const allbookings = await response.json();
+        setBookings(allbookings);
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+      }
     };
 
     const fetchRooms = async () => {
-      const response = await fetch('/RoomData.json');
-      const rooms = await response.json();
-      setRooms(rooms);
+      try {
+        const response = await fetch('/RoomData.json');
+        const rooms = await response.json();
+        setRooms(rooms);
+      } catch (error) {
+        console.error('Error fetching rooms:', error);
+      }
     };
 
     fetchBookings();
     fetchRooms();
   }, []);
 
-  const allbookings = bookings.length;
-  const numroom = rooms.length;
-  const occupied = rooms.filter(room => !room.available).length;
-  const occupation = ((occupied / numroom) * 100).toFixed(2) + "%";
-  const checkin = bookings.filter(booking => booking.status === "check in").length;
-  const checkout = bookings.filter(booking => booking.status === "check out").length;
+  const allBookingsCount = bookings.length;
+  const totalRooms = rooms.length;
+  const occupiedRooms = rooms.filter(room => !room.available).length;
+  const occupationRate = ((occupiedRooms / totalRooms) * 100).toFixed(2) + "%";
+  const checkInCount = bookings.filter(booking => booking.status === "Check In").length;
+  const checkOutCount = bookings.filter(booking => booking.status === "Check Out").length;
 
   return (
     <DashboardGrid>
@@ -38,8 +46,8 @@ const Dashboard = () => {
           <IoBedOutline />
         </KPIpicture>
         <KPItext>
-          <h3>{allbookings}</h3>
-          <h4>New Bookung</h4>
+          <h3>{allBookingsCount}</h3>
+          <h4>New Booking</h4>
         </KPItext>
       </KPI>
       <KPI>
@@ -47,17 +55,8 @@ const Dashboard = () => {
           <LuCalendarCheck2 />
         </KPIpicture>
         <KPItext>
-          <h3>{occupation}</h3>
+          <h3>{occupationRate}</h3>
           <h4>Scheduled Room</h4>
-        </KPItext>
-      </KPI>
-      <KPI>
-        <KPIpicture type="regular">
-          <IoLogOutOutline />
-        </KPIpicture>
-        <KPItext>
-          <h3>{checkin}</h3>
-          <h4>Check In</h4>
         </KPItext>
       </KPI>
       <KPI>
@@ -65,7 +64,16 @@ const Dashboard = () => {
           <IoLogInOutline />
         </KPIpicture>
         <KPItext>
-          <h3>{checkout}</h3>
+          <h3>{checkInCount}</h3>
+          <h4>Check In</h4>
+        </KPItext>
+      </KPI>
+      <KPI>
+        <KPIpicture type="regular">
+          <IoLogOutOutline />
+        </KPIpicture>
+        <KPItext>
+          <h3>{checkOutCount}</h3>
           <h4>Check Out</h4>
         </KPItext>
       </KPI>

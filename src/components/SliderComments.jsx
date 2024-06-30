@@ -3,15 +3,7 @@
 // import { Navigation } from 'swiper/modules';
 // import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 // import {
-//   ReviewsSliderContainer,
-//   ReviewCard,
-//   ReviewContent,
-//   ReviewFooter,
-//   ReviewerInfo,
-//   ReviewerImage,
-//   ReviewActions,
-//   ReviewButton,
-//   CommentTitle
+
 // } from '../components/styleComponents/SliderCommentsStyles';
 
 // const SliderComments = () => {

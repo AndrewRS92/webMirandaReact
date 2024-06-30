@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
@@ -9,11 +10,8 @@ import LoginForm from './components/LoginForm';
 import Room from './components/Room';
 import { LayoutContainer, MainContent, HeaderContainer, PageContentWrapper } from './components/styleComponents/LayoutStyles';
 
-
-
-
 const App = () => {
-  const [isMenuVisible, setMenuVisible] = useState([]);
+  const [isMenuVisible, setMenuVisible] = useState(false);
 
   const toggleMenu = () => {
     setMenuVisible(!isMenuVisible);
@@ -24,10 +22,10 @@ const App = () => {
       <Router>
         <LayoutContainer>
           <HeaderContainer>
-            <Header toggleMenu={toggleMenu}/>
+            <Header toggleMenu={toggleMenu} />
           </HeaderContainer>
           <MainContent>
-            <PageContentWrapper>
+            <PageContentWrapper isMenuVisible={isMenuVisible}>
               <Routes>
                 <Route exact path="/" element={<Dashboard />} />
                 <Route path="/Concierge" element={<Concierge />} />

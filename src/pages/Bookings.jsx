@@ -1,109 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Table,
-  TableContainer,
-  TableHead,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableCell,
-  NotesButton,
-  StatusLabel,
-  FilterBar,
-  FilterOption
-} from '../components/styleComponents/BookingTableStyles';
+// src/pages/Bookings.js
+import React, { useEffect, useState } from 'react';
+import { IoBedOutline, IoLogOutOutline, IoLogInOutline } from "react-icons/io5";
+import { LuCalendarCheck2 } from "react-icons/lu";
+import { DashboardGrid, KPI, KPIpicture, KPItext } from '../components/DashboardStyles';
 
-const Bookings = () => {
-  const [tableData, setTableData] = useState([]);
-  const [filter, setFilter] = useState('all');
+const Dashboard = () => {
+  const [bookings, setBookings] = useState([]);
+  const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    fetch('/BookingsData.json')
-      .then(response => response.json())
-      .then(data => setTableData(data))
-      .catch(error => console.error('Error fetching data:', error));
+    const fetchBookings = async () => {
+      const response = await fetch('/BookingsData.json');
+      const allbookings = await response.json();
+      setBookings(allbookings);
+    };
+
+    const fetchRooms = async () => {
+      const response = await fetch('/RoomData.json');
+      const rooms = await response.json();
+      setRooms(rooms);
+    };
+
+    fetchBookings();
+    fetchRooms();
   }, []);
 
-  const getStatusLabel = (status) => {
-    switch (status) {
-      case 0:
-        return "Pending";
-      case 1:
-        return "Booked";
-      case 2:
-        return "Cancelled";
-      case 3:
-        return "Refunded";
-      default:
-        return "";
-    }
-  };
+  const allbookings = bookings.length;
+  const numroom = rooms.length;
+  const occupied = rooms.filter(room => !room.available).length;
+  const occupation = ((occupied / numroom) * 100).toFixed(2) + "%";
 
-  const getStatusClass = (status) => {
-    switch (status) {
-      case 0:
-        return "status-pending";
-      case 1:
-        return "status-booked";
-      case 2:
-        return "status-cancelled";
-      case 3:
-        return "status-refunded";
-      default:
-        return "";
-    }
-  };
-
-  const handleFilterChange = (newFilter) => {
-    setFilter(newFilter);
-  };
-
-  const filteredData = tableData.filter(row => {
-    if (filter === 'all') return true;
-    return getStatusLabel(row.status).toLowerCase() === filter;
-  });
+  // Filtro para obtener las reservas con estado "Check In"
+  const checkin = bookings.filter(booking => booking.status.toLowerCase() === "check in".toLowerCase()).length;
+  
+  // Filtro para obtener las reservas con estado "Check Out"
+  const checkout = bookings.filter(booking => booking.status.toLowerCase() === "check out".toLowerCase()).length;
 
   return (
-    <TableContainer>
-      <FilterBar>
-        <FilterOption className={filter === 'all' ? 'active' : ''} onClick={() => handleFilterChange('all')}>All Guest</FilterOption>
-        <FilterOption className={filter === 'pending' ? 'active' : ''} onClick={() => handleFilterChange('pending')}>Pending</FilterOption>
-        <FilterOption className={filter === 'booked' ? 'active' : ''} onClick={() => handleFilterChange('booked')}>Booked</FilterOption>
-        <FilterOption className={filter === 'cancelled' ? 'active' : ''} onClick={() => handleFilterChange('cancelled')}>Cancelled</FilterOption>
-        <FilterOption className={filter === 'refunded' ? 'active' : ''} onClick={() => handleFilterChange('refunded')}>Refunded</FilterOption>
-      </FilterBar>
-      <Table>
-        <TableHead>
-          <tr>
-            <TableHeader>Guest</TableHeader>
-            <TableHeader>Order Date</TableHeader>
-            <TableHeader>Check In</TableHeader>
-            <TableHeader>Check Out</TableHeader>
-            <TableHeader>Special Request</TableHeader>
-            <TableHeader>Room Type</TableHeader>
-            <TableHeader>Status</TableHeader>
-          </tr>
-        </TableHead>
-        <TableBody>
-          {filteredData.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell>{`${row.first_name} ${row.last_name}`}</TableCell>
-              <TableCell>{row.order_date}</TableCell>
-              <TableCell>{row.checkin_date}</TableCell>
-              <TableCell>{row.checkout_date}</TableCell>
-              <TableCell><NotesButton>View Notes</NotesButton></TableCell>
-              <TableCell>{row.room_type}</TableCell>
-              <TableCell>
-                <StatusLabel className={getStatusClass(row.status)}>
-                  {getStatusLabel(row.status)}
-                </StatusLabel>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <DashboardGrid>
+      <KPI>
+        <KPIpicture type="regular">
+          <IoBedOutline />
+        </KPIpicture>
+        <KPItext>
+          <h3>{allbookings}</h3>
+          <h4>New Booking</h4>
+        </KPItext>
+      </KPI>
+      <KPI>
+        <KPIpicture type="red">
+          <LuCalendarCheck2 />
+        </KPIpicture>
+        <KPItext>
+          <h3>{occupation}</h3>
+          <h4>Scheduled Room</h4>
+        </KPItext>
+      </KPI>
+      <KPI>
+        <KPIpicture type="regular">
+          <IoLogOutOutline />
+        </KPIpicture>
+        <KPItext>
+          <h3>{checkin}</h3>
+          <h4>Check In</h4>
+        </KPItext>
+      </KPI>
+      <KPI>
+        <KPIpicture type="regular">
+          <IoLogInOutline />
+        </KPIpicture>
+        <KPItext>
+          <h3>{checkout}</h3>
+          <h4>Check Out</h4>
+        </KPItext>
+      </KPI>
+    </DashboardGrid>
   );
 };
 
-export default Bookings;
+export default Dashboard;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { IoBedOutline, IoLogOutOutline, IoLogInOutline } from "react-icons/io5";
 import { LuCalendarCheck2 } from "react-icons/lu";
-import { DashboardGrid, KPI, KPIpicture, KPItext } from '../components/DashboardStyles';
+import { DashboardGrid, KPI, KPIpicture, KPItext } from '../components/styleComponents/DashboardStyles';
+// import SliderComments from '../components/SliderComments';
 
 const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
@@ -40,44 +41,49 @@ const Dashboard = () => {
   const checkOutCount = bookings.filter(booking => booking.status === "Check Out").length;
 
   return (
-    <DashboardGrid>
-      <KPI>
-        <KPIpicture type="regular">
-          <IoBedOutline />
-        </KPIpicture>
-        <KPItext>
-          <h3>{allBookingsCount}</h3>
-          <h4>New Booking</h4>
-        </KPItext>
-      </KPI>
-      <KPI>
-        <KPIpicture type="red">
-          <LuCalendarCheck2 />
-        </KPIpicture>
-        <KPItext>
-          <h3>{occupationRate}</h3>
-          <h4>Scheduled Room</h4>
-        </KPItext>
-      </KPI>
-      <KPI>
-        <KPIpicture type="regular">
-          <IoLogInOutline />
-        </KPIpicture>
-        <KPItext>
-          <h3>{checkInCount}</h3>
-          <h4>Check In</h4>
-        </KPItext>
-      </KPI>
-      <KPI>
-        <KPIpicture type="regular">
-          <IoLogOutOutline />
-        </KPIpicture>
-        <KPItext>
-          <h3>{checkOutCount}</h3>
-          <h4>Check Out</h4>
-        </KPItext>
-      </KPI>
-    </DashboardGrid>
+    <div>
+      <DashboardGrid>
+        <KPI>
+          <KPIpicture type="regular">
+            <IoBedOutline />
+          </KPIpicture>
+          <KPItext>
+            <h3>{allBookingsCount}</h3>
+            <h4>New Booking</h4>
+          </KPItext>
+        </KPI>
+        <KPI>
+          <KPIpicture type="red">
+            <LuCalendarCheck2 />
+          </KPIpicture>
+          <KPItext>
+            <h3>{occupationRate}</h3>
+            <h4>Scheduled Room</h4>
+          </KPItext>
+        </KPI>
+        <KPI>
+          <KPIpicture type="regular">
+            <IoLogInOutline />
+          </KPIpicture>
+          <KPItext>
+            <h3>{checkInCount}</h3>
+            <h4>Check In</h4>
+          </KPItext>
+        </KPI>
+        <KPI>
+          <KPIpicture type="regular">
+            <IoLogOutOutline />
+          </KPIpicture>
+          <KPItext>
+            <h3>{checkOutCount}</h3>
+            <h4>Check Out</h4>
+          </KPItext>
+        </KPI>
+      </DashboardGrid>
+      {/* <SliderComments /> */}
+    </div>
+
+    
   );
 };
 

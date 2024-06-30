@@ -43,7 +43,7 @@ export const KPItext = styled.div`
   }
 
   h4 {
-    font-size: 0.8rem;  // Reducir el tamaño de la fuente
+    font-size: 0.8rem;  
     color: #666;
     margin: 0;
   }

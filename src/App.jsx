@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Bookings from './pages/Bookings';
 import Concierge from './pages/Concierge';
-import Guest from './pages/Guest';
+import Guest from './pages/Contact';
 import Header from './components/Header';
 import LoginForm from './components/LoginForm';
 import Room from './pages/Room';

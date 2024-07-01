@@ -1,5 +1,5 @@
 
-const Guest = () => {
+const Contact = () => {
     
 
     
@@ -9,4 +9,4 @@ const Guest = () => {
 
 }
 
-export default Guest;
+export default Contact;

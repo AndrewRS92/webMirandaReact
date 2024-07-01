@@ -11,14 +11,11 @@ import {
   HeaderContainer,
   Nav,
   Dropdown,
-  Search,
-  SearchWrapper,
   MenuWrapper,
   MenuIcon,
-  SearchInput,
-  SearchIcon,
   Icons
 } from './styleComponents/HeaderStyles';
+import logo from '../images/logo.png'
 
 
 const Header = () => {
@@ -35,19 +32,13 @@ const Header = () => {
   return (
     <>
     <HeaderContainer>
-      
+    {/* <img src={logo} alt="Logo" className="logo" /> */}
     <Dropdown>
           <MenuIcon onClick={toggleMenu} />
         </Dropdown>
       <Nav>{getPageName(location.pathname)}</Nav>
      
 
-      {/* <Search>
-        <SearchWrapper>
-          <SearchInput type="text" />
-          <SearchIcon />
-        </SearchWrapper>
-      </Search> */}
       <Icons>
         <FaRegEnvelope className="icon" />
         <GoBell className="icon" />

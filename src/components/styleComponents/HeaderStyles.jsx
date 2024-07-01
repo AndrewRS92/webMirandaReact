@@ -16,6 +16,12 @@ export const HeaderContainer = styled.div`
   color: black;
   padding: 0.625rem 1.25rem;
   margin-left: 8rem;
+    .logo {
+    height: 5rem; 
+        position: absolute;
+    top: 1rem;
+    left: 1rem;
+  }
 `;
 
 export const Nav = styled.nav`

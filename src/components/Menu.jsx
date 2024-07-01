@@ -5,7 +5,11 @@ import {
   MenuNav,
   MenuList,
   MenuItem,
-  MenuLink
+  MenuLink,
+  UserInfo,
+  UserImage,
+  UserDetails,
+  ContactButton  
 } from './styleComponents/MenuStyles';
 
 const Menu = () => {
@@ -24,13 +28,21 @@ const Menu = () => {
               <MenuLink to="/Bookings" activeClassName="active">Bookings</MenuLink>
             </MenuItem>
             <MenuItem>
-              <MenuLink to="/Guest" activeClassName="active">Guest</MenuLink>
+              <MenuLink to="/Contact" activeClassName="active">Contact</MenuLink>
             </MenuItem>
             <MenuItem>
               <MenuLink to="/Concierge" activeClassName="active">Concierge</MenuLink>
             </MenuItem>
           </MenuList>
         </MenuNav>
+        <UserInfo>
+          <UserImage src="user-image-url" alt="User Image" />
+          <UserDetails>
+            <h4>Andrew Rojas</h4>
+            <p>adw@gmail.com</p>
+            <ContactButton>Contact Us</ContactButton>
+          </UserDetails>
+        </UserInfo>
       </MenuContainer>
       <Outlet />
     </>
@@ -38,5 +50,3 @@ const Menu = () => {
 };
 
 export default Menu;
-
-

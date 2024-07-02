@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import {
   MenuContainer,
   MenuNav,
@@ -13,6 +13,12 @@ import {
 } from './styleComponents/MenuStyles';
 
 const Menu = () => {
+  const navigate = useNavigate();
+
+  const handleEditUser = () => {
+    navigate('EditUser');
+  };
+
   return (
     <>
       <MenuContainer>
@@ -40,7 +46,7 @@ const Menu = () => {
           <UserDetails>
             <h4>Andrew Rojas</h4>
             <p>adw@gmail.com</p>
-            <MenuButton>Edit</MenuButton>
+            <MenuButton onClick={handleEditUser}>Edit</MenuButton>
           </UserDetails>
         </UserInfo>
       </MenuContainer>

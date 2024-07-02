@@ -6,9 +6,10 @@ export const MenuContainer = styled.div`
   box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Añadido */
+  justify-content: space-between; 
   padding: 1.25rem;
-  height: 100vh; /* Añadido */
+  height: 67.5rem;
+  color: #799283;
 `;
 
 export const MenuNav = styled.nav`
@@ -27,7 +28,7 @@ export const MenuItem = styled.li`
 
 export const MenuLink = styled(NavLink)`
   text-decoration: none;
-  color: #333;
+  color: #799283;
   font-size: 1.125rem;
   padding: 0.625rem 1.25rem;
   display: block;
@@ -76,7 +77,7 @@ export const UserDetails = styled.div`
   flex-direction: column;
 `;
 
-export const ContactButton = styled.button`
+export const MenuButton = styled.button`
   background-color: #ff0000;
   color: white;
   border: none;

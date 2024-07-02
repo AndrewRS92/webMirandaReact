@@ -3,13 +3,13 @@ import styled from 'styled-components';
 
 export const DashboardGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);  
+  grid-template-columns: repeat(4, 3fr);  
   gap: 1rem;;  
   padding: 2rem;;
   justify-content: center;
   align-items: center;
   width: 90%;
-  margin-left: 5rem;
+  margin-left: 1rem;
 `;
 
 export const KPI = styled.div`
@@ -19,7 +19,7 @@ export const KPI = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  min-width: 8rem; 
+  min-width: 15rem; 
   justify-content: center;
 `;
 

@@ -109,3 +109,30 @@ export const RoomStatus = styled.p`
     }
   }}
 `;
+
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+`;
+
+export const PaginationButton = styled.button`
+  background-color: #f9f9f9;
+  color: #000;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin: 0 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+`;
+
+export const PaginationInfo = styled.span`
+  font-size: 1rem;
+`;

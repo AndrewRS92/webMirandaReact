@@ -58,11 +58,10 @@ export const MenuLink = styled(NavLink)`
 export const UserInfo = styled.div`
   display: flex;
   align-items: center;
-  margin-top: auto; 
+  margin-top: 1rem; 
   padding-top: 1.25rem; 
   border-top: 1px solid #ddd; 
   color: black;
-  margin-bottom: 12rem;
 `;
 
 export const UserImage = styled.img`

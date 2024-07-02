@@ -4,12 +4,12 @@ import styled from 'styled-components';
 export const DashboardGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);  
-  gap: 0.5rem;  
-  padding: 1rem;
+  gap: 1rem;;  
+  padding: 2rem;;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  margin-left: 6rem;
+  width: 90%;
+  margin-left: 5rem;
 `;
 
 export const KPI = styled.div`
@@ -19,12 +19,12 @@ export const KPI = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  min-width: 8rem;  // Reducir el ancho mínimo
+  min-width: 8rem; 
   justify-content: center;
 `;
 
 export const KPIpicture = styled.div`
-  font-size: 1.2rem;  // Reducir el tamaño del ícono
+  font-size: 1.2rem;  
   color: ${props => (props.type === 'red' ? '#ff5a5f' : '#333')};
   margin-right: 0.5rem;
 `;

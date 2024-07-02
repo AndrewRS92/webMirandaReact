@@ -72,7 +72,7 @@ const Dashboard = () => {
         </KPI>
         <KPI>
           <KPIpicture type="regular">
-            <IoLogOutOutline />
+          <IoLogOutOutline />
           </KPIpicture>
           <KPItext>
             <h3>{checkOutCount}</h3>

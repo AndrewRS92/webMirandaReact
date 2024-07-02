@@ -7,6 +7,7 @@ import Concierge from './pages/Concierge';
 import Contact from './pages/Contact';
 import Header from './components/Header';
 import LoginForm from './components/LoginForm';
+import EditUser from './components/EditUser'
 import Room from './pages/Room';
 import { LayoutContainer, MainContent, HeaderContainer, PageContentWrapper } from './components/styleComponents/LayoutStyles';
 import { UserProvider } from './components/UserContext';
@@ -56,6 +57,10 @@ const App = () => {
                     <Route 
                       path="/Room" 
                       element={<ProtectedRoute element={<Room />} setHeaderTitle={setHeaderTitle} title="Room" />} 
+                    />
+                      <Route
+                      path="/EditUser"
+                      element={<ProtectedRoute element={<EditUser />} setHeaderTitle={setHeaderTitle} title="Edit User" />}
                     />
                   </Routes>
                 </PageContentWrapper>

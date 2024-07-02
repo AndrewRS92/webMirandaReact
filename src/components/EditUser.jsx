@@ -5,7 +5,7 @@ import {
   EditUserForm,
   EditUserInput,
   EditUserButton
-} from './styleComponents/EditUserStyles';
+} from './styleComponents/EditUserStyle';
 
 const EditUser = () => {
   const { user, setUser } = useContext(UserContext);

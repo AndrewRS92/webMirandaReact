@@ -9,7 +9,7 @@ import {
   UserInfo,
   UserImage,
   UserDetails,
-  ContactButton  
+  MenuButton  
 } from './styleComponents/MenuStyles';
 
 const Menu = () => {
@@ -40,7 +40,7 @@ const Menu = () => {
           <UserDetails>
             <h4>Andrew Rojas</h4>
             <p>adw@gmail.com</p>
-            <ContactButton>Contact Us</ContactButton>
+            <MenuButton>Edit</MenuButton>
           </UserDetails>
         </UserInfo>
       </MenuContainer>

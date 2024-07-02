@@ -8,12 +8,13 @@ export const MenuContainer = styled.div`
   flex-direction: column;
   justify-content: space-between; 
   padding: 1.25rem;
-  height: 67.5rem;
+  height: 19rem;
   color: #799283;
 `;
 
 export const MenuNav = styled.nav`
-  flex: 1; /* Añadido */
+  flex: 1; 
+  margin-bottom: 1rem;
 `;
 
 export const MenuList = styled.ul`

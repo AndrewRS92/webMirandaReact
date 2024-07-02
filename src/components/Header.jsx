@@ -43,6 +43,7 @@ const Header = () => {
         <FaRegEnvelope className="icon" />
         <GoBell className="icon" />
         <BiCommentDetail className="icon" />
+        
       </Icons>
     </HeaderContainer>
      <MenuWrapper isMenuVisible={isMenuVisible}>

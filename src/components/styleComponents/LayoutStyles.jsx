@@ -17,15 +17,14 @@ export const PageContent = styled.div`
   flex: 1;
   padding: 1rem;
   background-color: white;
-  overflow-y: auto; // Permitir desplazamiento vertical
 `;
 
 export const PageContentWrapper = styled.div`
-  margin-top: 60px;
-  padding-left: ${props => (props.isMenuVisible ? '250px' : '0')};
+  margin-top: 3.75rem;
+  padding-left: ${props => (props.isMenuVisible ? '19rem' : '0')}; 
   transition: padding-left 0.3s ease;
   flex: 1;
-  overflow-y: auto; // Permitir desplazamiento vertical
+  overflow-y: auto; 
 `;
 
 export const HeaderContainer = styled.div`

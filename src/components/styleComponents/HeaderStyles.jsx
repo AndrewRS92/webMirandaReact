@@ -38,11 +38,7 @@ export const Dropdown = styled.div`
 `;
 
 export const Search = styled.div`
-  display: flex;
-  align-items: center;
-  background-color: white;
-  flex-grow: 1;
-  margin: 0 1rem;
+
 `;
 
 export const SearchWrapper = styled.div`
@@ -71,21 +67,11 @@ export const MenuIcon = styled(HiMenuAlt2)`
 `;
 
 export const SearchInput = styled.input`
-  width: 100%;
-  padding: 0.4rem 2rem 0.4rem 0.4rem;
-  background-color: white;
-  border: 0.0625rem solid #ccc;
-  outline: none;
-  box-sizing: border-box;
+
 `;
 
 export const SearchIcon = styled(IoIosSearch)`
-  position: absolute;
-  right: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: black;
-  pointer-events: none; 
+
 `;
 
 export const Icons = styled.div`

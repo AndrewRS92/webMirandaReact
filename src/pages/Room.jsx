@@ -9,12 +9,17 @@ import {
   TableCell,
   FilterBar,
   FilterOption,
-  RoomStatus
+  RoomStatus,
+  Pagination,
+  PaginationButton,
+  PaginationInfo
 } from '../components/styleComponents/RoomTableStyles';
 
 const Room = () => {
   const [tableData, setTableData] = useState([]);
   const [filter, setFilter] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     fetch('/RoomData.json')
@@ -25,12 +30,19 @@ const Room = () => {
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
+    setCurrentPage(1); // Reset to first page on filter change
   };
 
   const filteredData = tableData.filter(row => {
     if (filter === 'all') return true;
     return filter === 'available' ? row.available : !row.available;
   });
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   return (
     <TableContainer>
@@ -53,7 +65,7 @@ const Room = () => {
           </tr>
         </TableHead>
         <TableBody>
-          {filteredData.map((row, index) => (
+          {currentItems.map((row, index) => (
             <TableRow key={index}>
               <TableCell><img src={row.images[0]} alt="Room" style={{ width: '5rem', height: '5rem' }} /></TableCell>
               <TableCell>{row.name}</TableCell>
@@ -71,6 +83,17 @@ const Room = () => {
           ))}
         </TableBody>
       </Table>
+      <Pagination>
+        <PaginationButton onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+          Previous
+        </PaginationButton>
+        <PaginationInfo>
+          Page {currentPage} of {totalPages}
+        </PaginationInfo>
+        <PaginationButton onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
+          Next
+        </PaginationButton>
+      </Pagination>
     </TableContainer>
   );
 };

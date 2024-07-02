@@ -9,7 +9,7 @@ export const DashboardGrid = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-left: 19rem;
+  margin-left: 6rem;
 `;
 
 export const KPI = styled.div`

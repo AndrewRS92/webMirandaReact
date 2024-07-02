@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const TableContainer = styled.div`
   margin: 2rem;
-  margin-left: 18rem;
+  margin-left: 6rem;
 `;
 
 export const Table = styled.table`

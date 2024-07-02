@@ -1,40 +1,60 @@
-import {useState} from "react"
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../components/UserContext';
+import { 
+  LoginContainer, 
+  LoginFormWrapper, 
+  LoginTitle, 
+  LoginInput, 
+  LoginButton, 
+  LoginError 
+} from './styleComponents/LoginStyles';
 
+const LoginForm = ({ setHeaderTitle }) => {
+  const { login } = useContext(UserContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-const LoginForm = () => {
-    
-    const [user, setUSer] = useState("")
-    const [password, setPassword] = useState("")
-    const [error, setError] = useState(false)
+  useEffect(() => {
+    setHeaderTitle('Login');
+  }, [setHeaderTitle]);
 
-    const handleSubmit =(e)=>{
-        e.preventDefault()
-        if (user === "" || password ===""){
-            setError(true)
-            return
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const success = await login(email, password);
+    if (!success) {
+      setError('Invalid email or password');
+    } else {
+      setError('');
+      navigate('/');
     }
-    
-    
-    return <section>
-        <h1>Login</h1>
+  };
 
-    <form
-        onSubmit={handleSubmit}
-    >
-        <input type="text" 
-        value={user}
-        onChange={e=> setUSer(e.target.value)}
+  return (
+    <LoginContainer>
+      <LoginFormWrapper onSubmit={handleSubmit}>
+        <LoginTitle>Login</LoginTitle>
+        <LoginInput
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          required
         />
-        <input type="password"
-        value={password}
-        onChange={e=> setPassword(e.target.value)}
+        <LoginInput
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
         />
-        <button>Login</button>
-
-    </form>
-        
-    </section>
-}
+        <LoginButton type="submit">Login</LoginButton>
+        {error && <LoginError>{error}</LoginError>}
+      </LoginFormWrapper>
+    </LoginContainer>
+  );
+};
 
 export default LoginForm;

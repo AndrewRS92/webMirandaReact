@@ -29,7 +29,7 @@ export const Nav = styled.nav`
   font-weight: bold;
   background-color: white;
   position: absolute;
-  margin-left: 8rem;
+  margin-left: 6rem;
 `;
 
 export const Dropdown = styled.div`

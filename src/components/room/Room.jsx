@@ -13,7 +13,7 @@ import {
   Pagination,
   PaginationButton,
   PaginationInfo
-} from '../components/styleComponents/RoomTableStyles';
+} from './RoomTableStyles';
 
 const Room = () => {
   const [tableData, setTableData] = useState([]);

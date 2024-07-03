@@ -11,7 +11,7 @@ import {
   FilterBar,
   FilterOption,
   EmployeeStatus
-} from '../components/styleComponents/EmployeeTableStyle';
+} from '../styleComponents/EmployeeTableStyle';
 
 const Concierge = () => {
   const [tableData, setTableData] = useState([]);

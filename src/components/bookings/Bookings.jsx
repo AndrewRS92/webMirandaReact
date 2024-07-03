@@ -12,7 +12,7 @@ import {
   FilterBar,
   FilterOption,
   BookingStatus
-} from '../components/styleComponents/BookingTableStyles';
+} from './BookingTableStyles';
 
 const Bookings = () => {
   const [tableData, setTableData] = useState([]);

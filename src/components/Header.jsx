@@ -8,7 +8,7 @@ import { GoBell } from "react-icons/go";
 import { BiCommentDetail } from "react-icons/bi";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { FiLogOut } from 'react-icons/fi';
-import { UserContext } from './UserContext';
+import { UserContext } from './context/UserContext';
 import {
   HeaderContainer,
   Nav,

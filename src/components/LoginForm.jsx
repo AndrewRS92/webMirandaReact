@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../components/UserContext';
+import { UserContext } from './context/UserContext';
 import { 
   LoginContainer, 
   LoginFormWrapper, 

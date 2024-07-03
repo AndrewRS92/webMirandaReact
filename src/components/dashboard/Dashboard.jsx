@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IoBedOutline, IoLogOutOutline, IoLogInOutline } from "react-icons/io5";
 import { LuCalendarCheck2 } from "react-icons/lu";
-import { DashboardGrid, KPI, KPIpicture, KPItext } from '../components/styleComponents/DashboardStyles';
+import { DashboardGrid, KPI, KPIpicture, KPItext } from './DashboardStyles';
 // import SliderComments from '../components/SliderComments';
 
 const Dashboard = () => {

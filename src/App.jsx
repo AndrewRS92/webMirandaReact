@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import Dashboard from './pages/Dashboard';
-import Bookings from './pages/Bookings';
-import Concierge from './pages/Concierge';
-import Contact from './pages/Contact';
+import Dashboard from './components/dashboard/Dashboard';
+import Bookings from './components/bookings/Bookings';
+import Concierge from './components/concierge/Concierge';
+import Contact from './components/contact/Contact';
 import Header from './components/Header';
 import LoginForm from './components/LoginForm';
 import EditUser from './components/EditUser'
-import Room from './pages/Room';
+import Room from './components/room/Room';
 import { LayoutContainer, MainContent, HeaderContainer, PageContentWrapper } from './components/styleComponents/LayoutStyles';
-import { UserProvider } from './components/UserContext';
+import { UserProvider } from './components/context/UserContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import store from './store'; 
 

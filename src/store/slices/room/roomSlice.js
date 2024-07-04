@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getRoomListThunk, addRoomThunk } from "./roomThunk";
+import { getRoomListThunk, addRoomThunk, deleteRoomThunk } from "./roomThunk";
 
 const roomSlice = createSlice({
   name: "room",
@@ -25,6 +25,9 @@ const roomSlice = createSlice({
       })
       .addCase(addRoomThunk.fulfilled, (state, action) => {
         state.dataList.push(action.payload);
+      })
+      .addCase(deleteRoomThunk.fulfilled, (state, action) => {
+        state.dataList = state.dataList.filter(room => room.id !== action.payload);
       });
   },
 });

@@ -40,7 +40,7 @@ const NewRoomPopup = ({ onClose, onSave }) => {
       facilities: [],
       price: '',
       offerPrice: '',
-      status: 'available'  // Default status is set to available
+      status: 'available' 
     });
   
     const handleChange = (e) => {

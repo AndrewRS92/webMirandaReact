@@ -32,3 +32,7 @@ export const EditUserButton = styled.button`
     background-color: #45a049;
   }
 `;
+export const EditUserLabel = styled.label`
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+`;

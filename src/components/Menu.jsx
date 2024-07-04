@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import {
   MenuContainer,
@@ -11,12 +11,15 @@ import {
   UserDetails,
   MenuButton  
 } from './styleComponents/MenuStyles';
+import { UserContext } from './context/UserContext';
 
 const Menu = () => {
   const navigate = useNavigate();
+  const { setIsEditing } = useContext(UserContext);
 
   const handleEditUser = () => {
-    navigate('EditUser');
+    setIsEditing(true);
+    navigate('/EditUser');
   };
 
   return (
@@ -25,19 +28,19 @@ const Menu = () => {
         <MenuNav>
           <MenuList>
             <MenuItem>
-              <MenuLink to="/" activeClassName="active" end>Dashboard</MenuLink>
+              <MenuLink to="/" activeclassname="active" end>Dashboard</MenuLink>
             </MenuItem>
             <MenuItem>
-              <MenuLink to="/Room" activeClassName="active">Room</MenuLink>
+              <MenuLink to="/Room" activeclassname="active">Room</MenuLink>
             </MenuItem>
             <MenuItem>
-              <MenuLink to="/Bookings" activeClassName="active">Bookings</MenuLink>
+              <MenuLink to="/Bookings" activeclassname="active">Bookings</MenuLink>
             </MenuItem>
             <MenuItem>
-              <MenuLink to="/Contact" activeClassName="active">Contact</MenuLink>
+              <MenuLink to="/Contact" activeclassname="active">Contact</MenuLink>
             </MenuItem>
             <MenuItem>
-              <MenuLink to="/Concierge" activeClassName="active">Concierge</MenuLink>
+              <MenuLink to="/Concierge" activeclassname="active">Concierge</MenuLink>
             </MenuItem>
           </MenuList>
         </MenuNav>
@@ -56,3 +59,4 @@ const Menu = () => {
 };
 
 export default Menu;
+

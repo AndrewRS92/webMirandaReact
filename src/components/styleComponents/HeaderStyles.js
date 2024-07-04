@@ -76,7 +76,7 @@ export const Icons = styled.div`
 `;
 
 export const MenuWrapper = styled.div`
-  display: ${props => (props.isMenuVisible ? 'flex' : 'none')};
+  display: ${props => (props.ismenuvisible ? 'flex' : 'none')};
   flex-direction: column;
   position: absolute;
   top: 3.75rem;

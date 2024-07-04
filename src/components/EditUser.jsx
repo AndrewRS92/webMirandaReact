@@ -1,15 +1,22 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from './context/UserContext';
 import {
   EditUserContainer,
   EditUserForm,
   EditUserInput,
-  EditUserButton
+  EditUserButton,
+  EditUserLabel
 } from './styleComponents/EditUserStyle';
 
 const EditUser = () => {
-  const { user, setUser } = useContext(UserContext);
-  const [formData, setFormData] = useState({ ...user });
+  const { user, updateUser, isEditing, setIsEditing } = useContext(UserContext);
+  const [formData, setFormData] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,13 +25,19 @@ const EditUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setUser(formData);
+    updateUser(formData);
+    setIsEditing(false); 
   };
+
+  if (!isEditing) {
+    return null; 
+  }
 
   return (
     <EditUserContainer>
       <h2>Edit User Information</h2>
       <EditUserForm onSubmit={handleSubmit}>
+        <EditUserLabel htmlFor="name">Name</EditUserLabel>
         <EditUserInput
           type="text"
           name="name"
@@ -32,6 +45,7 @@ const EditUser = () => {
           onChange={handleChange}
           placeholder="Name"
         />
+        <EditUserLabel htmlFor="email">Email</EditUserLabel>
         <EditUserInput
           type="email"
           name="email"
@@ -39,7 +53,14 @@ const EditUser = () => {
           onChange={handleChange}
           placeholder="Email"
         />
- 
+        <EditUserLabel htmlFor="password">Password</EditUserLabel>
+        <EditUserInput
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Password"
+        />
         <EditUserButton type="submit">Save Changes</EditUserButton>
       </EditUserForm>
     </EditUserContainer>

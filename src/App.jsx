@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Dashboard from './components/dashboard/Dashboard';
@@ -7,32 +7,56 @@ import Concierge from './components/concierge/Concierge';
 import Contact from './components/contact/Contact';
 import Header from './components/Header';
 import LoginForm from './components/LoginForm';
-import EditUser from './components/EditUser'
+import EditUser from './components/EditUser';
 import Room from './components/room/Room';
 import { LayoutContainer, MainContent, HeaderContainer, PageContentWrapper } from './components/styleComponents/LayoutStyles';
-import { UserProvider } from './components/context/UserContext';
+import { UserProvider } from './components/context/UserContext'; 
 import ProtectedRoute from './components/ProtectedRoute';
-import store from './store'; 
+import store from './store';
+import { initializeLocalStorage } from './components/DataService';
+
+const initialState = {
+  ismenuvisible: false,
+  headerTitle: 'Dashboard',
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'TOGGLE_MENU':
+      return { ...state, ismenuvisible: !state.ismenuvisible };
+    case 'SET_HEADER_TITLE':
+      return { ...state, headerTitle: action.payload };
+    default:
+      return state;
+  }
+};
 
 const App = () => {
-  const [isMenuVisible, setMenuVisible] = useState(false);
-  const [headerTitle, setHeaderTitle] = useState('Dashboard');
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    initializeLocalStorage();
+  }, []);
 
   const toggleMenu = () => {
-    setMenuVisible(!isMenuVisible);
+    dispatch({ type: 'TOGGLE_MENU' });
+  };
+
+  const setHeaderTitle = (title) => {
+    dispatch({ type: 'SET_HEADER_TITLE', payload: title });
   };
 
   return (
     <Provider store={store}>
-      <UserProvider>
+      <UserProvider> 
         <div className="App">
           <Router>
             <LayoutContainer>
               <HeaderContainer>
-                <Header toggleMenu={toggleMenu} title={headerTitle} />
+                <Header toggleMenu={toggleMenu} title={state.headerTitle} />
               </HeaderContainer>
               <MainContent>
-                <PageContentWrapper isMenuVisible={isMenuVisible.toString()}>
+                <PageContentWrapper $ismenuvisible={state.ismenuvisible}>
                   <Routes>
                     <Route 
                       path="/LoginForm" 
@@ -58,7 +82,7 @@ const App = () => {
                       path="/Room" 
                       element={<ProtectedRoute element={<Room />} setHeaderTitle={setHeaderTitle} title="Room" />} 
                     />
-                      <Route
+                    <Route
                       path="/EditUser"
                       element={<ProtectedRoute element={<EditUser />} setHeaderTitle={setHeaderTitle} title="Edit User" />}
                     />

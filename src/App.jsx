@@ -12,7 +12,7 @@ import Room from './components/room/Room';
 import { LayoutContainer, MainContent, HeaderContainer, PageContentWrapper } from './components/styleComponents/LayoutStyles';
 import { UserProvider } from './components/context/UserContext'; 
 import ProtectedRoute from './components/ProtectedRoute';
-import store from './store'; // Asegúrate de importar el store aquí
+import store from './features'; 
 import { initializeLocalStorage } from './components/DataService';
 
 const initialState = {

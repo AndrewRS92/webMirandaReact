@@ -1,14 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import bookingsReducer from './slices/bookingSlice';
-import roomsReducer from './slices/roomSlice';
-import usersReducer from './slices/usersSlice';
+import roomReducer from './slices/room/roomSlice';
 
 const store = configureStore({
   reducer: {
-    bookings: bookingsReducer,
-    rooms: roomsReducer,
-    users: usersReducer,
+    room: roomReducer,
+    // otros reducers aquí
   },
 });
 
-export default store; 
+export default store;

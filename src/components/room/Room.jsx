@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRoomListThunk, addRoomThunk } from '../../store/slices/room/roomThunk';
 import {
   Table,
   TableContainer,
@@ -19,27 +21,21 @@ import {
 import NewRoomPopup from './NewRoomPopup';
 
 const Room = () => {
-  const [tableData, setTableData] = useState([]);
+  const dispatch = useDispatch();
+  const { dataList: tableData, status, error } = useSelector((state) => state.room);
   const [filter, setFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
-  const [newRoomId, setNewRoomId] = useState('');
   const itemsPerPage = 10;
 
   useEffect(() => {
-    fetch('/RoomData.json')
-      .then(response => response.json())
-      .then(data => {
-        setTableData(data);
-        if (data.length > 0) {
-          const lastId = data[data.length - 1].id;
-          setNewRoomId(lastId + 1);
-        } else {
-          setNewRoomId(1); 
-        }
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+    dispatch(getRoomListThunk());
+  }, [dispatch]);
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+    setCurrentPage(1);
+  };
 
   const filteredData = tableData.filter(row => {
     if (filter === 'all') return true;
@@ -55,14 +51,14 @@ const Room = () => {
   const handleNewRoomClick = () => {
     setShowPopup(true);
   };
+  
   const handleClosePopup = () => {
     setShowPopup(false); 
   };
 
   const handleSaveRoom = (newRoom) => {
-    setTableData([...tableData, newRoom]); 
+    dispatch(addRoomThunk(newRoom));
     setShowPopup(false); 
-    setNewRoomId(newRoomId + 1);
   };
 
   return (
@@ -93,8 +89,8 @@ const Room = () => {
         <TableBody>
           {currentItems.map((row, index) => (
             <TableRow key={index}>
-              <TableCell><img src={row.images[0]} alt="Room" style={{ width: '5rem', height: '5rem' }} /></TableCell>
-              <TableCell>{row.name}</TableCell>
+              {/* <TableCell><img src={row.images[0]} alt="Room" style={{ width: '5rem', height: '5rem' }} /></TableCell> */}
+              <TableCell>{row.roomNumber}</TableCell>
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.bedType}</TableCell>
               <TableCell>{row.facilities.join(', ')}</TableCell>

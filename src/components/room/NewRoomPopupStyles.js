@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Select from 'react-select';
 
 export const PopupContainer = styled.div`
   position: fixed;
@@ -38,7 +39,7 @@ export const PopupFooter = styled.div`
 `;
 
 export const CloseButton = styled.button`
-  background: black;
+  background: transparent;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
@@ -75,7 +76,7 @@ export const InputField = styled.input`
   font-size: 1rem;
 `;
 
-export const SelectField = styled.select`
+export const SelectField = styled(Select)`
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;

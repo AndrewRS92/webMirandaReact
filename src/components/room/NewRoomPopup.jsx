@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
 import {
   PopupContainer,
@@ -25,23 +25,23 @@ const facilitiesOptions = [
   { value: 'Wifi', label: 'Wifi' }
 ];
 
-const NewRoomPopup = ({ onClose, onSave, newRoomId }) => {
+const bedTypeOptions = [
+  { value: 'Single Bed', label: 'Single Bed' },
+  { value: 'Double Bed', label: 'Double Bed' },
+  { value: 'Double Superior', label: 'Double Superior' },
+  { value: 'Suite', label: 'Suite' }
+];
+
+const NewRoomPopup = ({ onClose, onSave }) => {
   const [formData, setFormData] = useState({
     roomNumber: '',
-    roomId: newRoomId, // Use newRoomId prop
-    bedType: 'Single Bed', // Default value
+    roomId: '',
+    bedType: '',
     facilities: [],
     price: '',
     offerPrice: '',
     status: 'available'
   });
-
-  useEffect(() => {
-    setFormData((prevData) => ({
-      ...prevData,
-      roomId: newRoomId, // Set newRoomId when it changes
-    }));
-  }, [newRoomId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,15 +49,12 @@ const NewRoomPopup = ({ onClose, onSave, newRoomId }) => {
   };
 
   const handleFacilitiesChange = (selectedOptions) => {
-    setFormData({ ...formData, facilities: selectedOptions });
+    const facilities = selectedOptions.map(option => option.value);
+    setFormData({ ...formData, facilities });
   };
 
   const handleSave = () => {
-    const newRoomData = {
-      ...formData,
-      facilities: formData.facilities.map(option => option.value) // Convert to array of values
-    };
-    onSave(newRoomData);
+    onSave(formData);
   };
 
   return (
@@ -74,27 +71,25 @@ const NewRoomPopup = ({ onClose, onSave, newRoomId }) => {
           </InputGroup>
           <InputGroup>
             <InputLabel htmlFor="roomId">Room ID</InputLabel>
-            <InputField type="text" name="roomId" value={formData.roomId} readOnly /> {/* Read-only field */}
+            <InputField type="text" name="roomId" value={formData.roomId} onChange={handleChange} />
           </InputGroup>
           <InputGroup>
             <InputLabel htmlFor="bedType">Bed Type</InputLabel>
-            <SelectField name="bedType" value={formData.bedType} onChange={handleChange}>
-              <option value="Single Bed">Single Bed</option>
-              <option value="Double Bed">Double Bed</option>
-              <option value="Double Superior">Double Superior</option>
-              <option value="Suite">Suite</option>
-            </SelectField>
+            <SelectField
+              name="bedType"
+              value={bedTypeOptions.find(option => option.value === formData.bedType)}
+              onChange={(option) => setFormData({ ...formData, bedType: option.value })}
+              options={bedTypeOptions}
+            />
           </InputGroup>
           <InputGroup>
             <InputLabel htmlFor="facilities">Facilities</InputLabel>
             <Select
               isMulti
               name="facilities"
-              options={facilitiesOptions}
-              value={formData.facilities}
+              value={facilitiesOptions.filter(option => formData.facilities.includes(option.value))}
               onChange={handleFacilitiesChange}
-              className="basic-multi-select"
-              classNamePrefix="select"
+              options={facilitiesOptions}
             />
           </InputGroup>
           <InputGroup>
@@ -107,10 +102,10 @@ const NewRoomPopup = ({ onClose, onSave, newRoomId }) => {
           </InputGroup>
           <InputGroup>
             <InputLabel htmlFor="status">Status</InputLabel>
-            <SelectField name="status" value={formData.status} onChange={handleChange}>
+            <select name="status" value={formData.status} onChange={handleChange}>
               <option value="available">Available</option>
               <option value="booked">Booked</option>
-            </SelectField>
+            </select>
           </InputGroup>
         </PopupBody>
         <PopupFooter>

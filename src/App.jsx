@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer } from 'react';
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Dashboard from './components/dashboard/Dashboard';
@@ -13,7 +12,7 @@ import Room from './components/room/Room';
 import { LayoutContainer, MainContent, HeaderContainer, PageContentWrapper } from './components/styleComponents/LayoutStyles';
 import { UserProvider } from './components/context/UserContext'; 
 import ProtectedRoute from './components/ProtectedRoute';
-import store from './store';
+import store from './store'; // Asegúrate de importar el store aquí
 import { initializeLocalStorage } from './components/DataService';
 
 const initialState = {

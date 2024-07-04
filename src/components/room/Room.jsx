@@ -16,24 +16,30 @@ import {
   NewRoomButtonContainer,
   NewRoomButton
 } from './RoomTableStyles';
+import NewRoomPopup from './NewRoomPopup';
 
 const Room = () => {
   const [tableData, setTableData] = useState([]);
   const [filter, setFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
+  const [showPopup, setShowPopup] = useState(false);
+  const [newRoomId, setNewRoomId] = useState('');
   const itemsPerPage = 10;
 
   useEffect(() => {
     fetch('/RoomData.json')
       .then(response => response.json())
-      .then(data => setTableData(data))
+      .then(data => {
+        setTableData(data);
+        if (data.length > 0) {
+          const lastId = data[data.length - 1].id;
+          setNewRoomId(lastId + 1);
+        } else {
+          setNewRoomId(1); 
+        }
+      })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
-
-  const handleFilterChange = (newFilter) => {
-    setFilter(newFilter);
-    setCurrentPage(1); 
-  };
 
   const filteredData = tableData.filter(row => {
     if (filter === 'all') return true;
@@ -47,8 +53,16 @@ const Room = () => {
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   const handleNewRoomClick = () => {
-    // Aquí puedes manejar la lógica para agregar una nueva habitación
-    alert('New Room button clicked!');
+    setShowPopup(true);
+  };
+  const handleClosePopup = () => {
+    setShowPopup(false); 
+  };
+
+  const handleSaveRoom = (newRoom) => {
+    setTableData([...tableData, newRoom]); 
+    setShowPopup(false); 
+    setNewRoomId(newRoomId + 1);
   };
 
   return (
@@ -61,7 +75,7 @@ const Room = () => {
         <NewRoomButtonContainer>
           <NewRoomButton onClick={handleNewRoomClick}>+ New Room</NewRoomButton>
         </NewRoomButtonContainer>
-        
+
       </FilterBar>
       <Table>
         <TableHead>
@@ -106,6 +120,7 @@ const Room = () => {
           Next
         </PaginationButton>
       </Pagination>
+      {showPopup && <NewRoomPopup onClose={handleClosePopup} onSave={handleSaveRoom} />}
     </TableContainer>
   );
 };

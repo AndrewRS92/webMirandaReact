@@ -15,7 +15,7 @@ import { UserContext } from './context/UserContext';
 
 const Menu = () => {
   const navigate = useNavigate();
-  const { setIsEditing } = useContext(UserContext);
+  const { user, setIsEditing } = useContext(UserContext);
 
   const handleEditUser = () => {
     setIsEditing(true);
@@ -47,8 +47,8 @@ const Menu = () => {
         <UserInfo>
           <UserImage src="user-image-url" alt="User Image" />
           <UserDetails>
-            <h4>Andrew Rojas</h4>
-            <p>adw@gmail.com</p>
+            <h4>{user?.name}</h4>
+            <p>{user?.email}</p>
             <MenuButton onClick={handleEditUser}>Edit</MenuButton>
           </UserDetails>
         </UserInfo>
@@ -59,4 +59,3 @@ const Menu = () => {
 };
 
 export default Menu;
-

@@ -14,7 +14,7 @@ const EditUser = () => {
 
   useEffect(() => {
     if (user) {
-      
+      setFormData(user);
     }
   }, [user]);
 

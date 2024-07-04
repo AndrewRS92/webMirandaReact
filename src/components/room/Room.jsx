@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRoomListThunk, addRoomThunk } from '../../store/slices/room/roomThunk';
 import {
   Table,
   TableContainer,
@@ -16,23 +18,23 @@ import {
   NewRoomButtonContainer,
   NewRoomButton
 } from './RoomTableStyles';
+import NewRoomPopup from './NewRoomPopup';
 
 const Room = () => {
-  const [tableData, setTableData] = useState([]);
+  const dispatch = useDispatch();
+  const { dataList: tableData, status, error } = useSelector((state) => state.room);
   const [filter, setFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
+  const [showPopup, setShowPopup] = useState(false);
   const itemsPerPage = 10;
 
   useEffect(() => {
-    fetch('/RoomData.json')
-      .then(response => response.json())
-      .then(data => setTableData(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+    dispatch(getRoomListThunk());
+  }, [dispatch]);
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const filteredData = tableData.filter(row => {
@@ -47,8 +49,16 @@ const Room = () => {
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   const handleNewRoomClick = () => {
-    // Aquí puedes manejar la lógica para agregar una nueva habitación
-    alert('New Room button clicked!');
+    setShowPopup(true);
+  };
+  
+  const handleClosePopup = () => {
+    setShowPopup(false); 
+  };
+
+  const handleSaveRoom = (newRoom) => {
+    dispatch(addRoomThunk(newRoom));
+    setShowPopup(false); 
   };
 
   return (
@@ -61,7 +71,7 @@ const Room = () => {
         <NewRoomButtonContainer>
           <NewRoomButton onClick={handleNewRoomClick}>+ New Room</NewRoomButton>
         </NewRoomButtonContainer>
-        
+
       </FilterBar>
       <Table>
         <TableHead>
@@ -79,8 +89,8 @@ const Room = () => {
         <TableBody>
           {currentItems.map((row, index) => (
             <TableRow key={index}>
-              <TableCell><img src={row.images[0]} alt="Room" style={{ width: '5rem', height: '5rem' }} /></TableCell>
-              <TableCell>{row.name}</TableCell>
+              {/* <TableCell><img src={row.images[0]} alt="Room" style={{ width: '5rem', height: '5rem' }} /></TableCell> */}
+              <TableCell>{row.roomNumber}</TableCell>
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.bedType}</TableCell>
               <TableCell>{row.facilities.join(', ')}</TableCell>
@@ -106,6 +116,7 @@ const Room = () => {
           Next
         </PaginationButton>
       </Pagination>
+      {showPopup && <NewRoomPopup onClose={handleClosePopup} onSave={handleSaveRoom} />}
     </TableContainer>
   );
 };

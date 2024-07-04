@@ -1,29 +1,51 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const initialState = {
-  users: [],
-  user: null,
+const loadRoomsFromLocalStorage = () => {
+  const rooms = localStorage.getItem('rooms');
+  return rooms ? JSON.parse(rooms) : [];
 };
 
-const usersSlice = createSlice({
-  name: 'users',
-  initialState,
-  reducers: {
-    setUsers(state, action) {
-      state.users = action.payload;
-    },
-    setUser(state, action) {
-      state.user = action.payload;
-    },
-    clearUser(state) {
-      state.user = null;
-    },
-    logout(state) {
-      state.user = null;
-    },
+const saveRoomsToLocalStorage = (rooms) => {
+  localStorage.setItem('rooms', JSON.stringify(rooms));
+};
+
+export const fetchRooms = createAsyncThunk('rooms/fetchRooms', async () => {
+  return loadRoomsFromLocalStorage();
+});
+
+export const addRoom = createAsyncThunk('rooms/addRoom', async (newRoom) => {
+  const rooms = loadRoomsFromLocalStorage();
+  const updatedRooms = [...rooms, newRoom];
+  saveRoomsToLocalStorage(updatedRooms);
+  return newRoom;
+});
+
+const roomSlice = createSlice({
+  name: 'rooms',
+  initialState: {
+    data: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchRooms.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchRooms.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(fetchRooms.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(addRoom.fulfilled, (state, action) => {
+        state.data.push(action.payload);
+      });
   },
 });
 
-export const { setUsers, setUser, clearUser, logout } = usersSlice.actions;
-
-export default usersSlice.reducer;
+export default roomSlice.reducer;

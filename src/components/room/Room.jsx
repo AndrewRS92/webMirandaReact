@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaTrash } from 'react-icons/fa';
-import { getRoomListThunk, addRoomThunk, deleteRoomThunk} from '../../store/slices/room/roomThunk';
+import { getRoomListThunk, addRoomThunk, deleteRoomThunk} from '../../features/slices/room/roomThunk';
 import {
   Table,
   TableContainer,

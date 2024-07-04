@@ -7,9 +7,14 @@ const roomSlice = createSlice({
     status: "idle",
     dataList: [],
     data: null,
-    error: null
+    error: null,
+    editRoom: null, 
   },
-  reducers: {},
+  reducers: {
+    setEditRoom: (state, action) => {
+      state.editRoom = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getRoomListThunk.pending, (state) => {
@@ -32,9 +37,11 @@ const roomSlice = createSlice({
   },
 });
 
+export const { setEditRoom } = roomSlice.actions;
 export const roomDataSelector = (state) => state.room.data;
 export const roomDataListSelector = (state) => state.room.dataList;
 export const roomStatusSelector = (state) => state.room.status;
 export const roomErrorSelector = (state) => state.room.error;
+export const roomEditSelector = (state) => state.room.editRoom; 
 
 export default roomSlice.reducer;

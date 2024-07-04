@@ -12,7 +12,9 @@ import {
   RoomStatus,
   Pagination,
   PaginationButton,
-  PaginationInfo
+  PaginationInfo,
+  NewRoomButtonContainer,
+  NewRoomButton
 } from './RoomTableStyles';
 
 const Room = () => {
@@ -44,12 +46,22 @@ const Room = () => {
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
+  const handleNewRoomClick = () => {
+    // Aquí puedes manejar la lógica para agregar una nueva habitación
+    alert('New Room button clicked!');
+  };
+
   return (
     <TableContainer>
       <FilterBar>
         <FilterOption className={filter === 'all' ? 'active' : ''} onClick={() => handleFilterChange('all')}>All Rooms</FilterOption>
         <FilterOption className={filter === 'available' ? 'active' : ''} onClick={() => handleFilterChange('available')}>Available</FilterOption>
         <FilterOption className={filter === 'booked' ? 'active' : ''} onClick={() => handleFilterChange('booked')}>Booked</FilterOption>
+
+        <NewRoomButtonContainer>
+          <NewRoomButton onClick={handleNewRoomClick}>+ New Room</NewRoomButton>
+        </NewRoomButtonContainer>
+        
       </FilterBar>
       <Table>
         <TableHead>

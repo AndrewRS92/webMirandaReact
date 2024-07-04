@@ -13,6 +13,24 @@ export const Table = styled.table`
 export const TableHead = styled.thead`
   background-color: #f9f9f9;
 `;
+export const NewRoomButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 15rem;
+`;
+
+export const NewRoomButton = styled.button`
+  background-color: #2f855a;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  &:hover {
+    background-color: #276749;
+  }
+`;
 
 export const TableHeader = styled.th`
   border: 0.1rem solid #ddd;

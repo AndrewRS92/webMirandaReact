@@ -25,10 +25,10 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useContext(UserContext); 
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [ismenuvisible, setismenuvisible] = useState(false);
 
   const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
+    setismenuvisible(!ismenuvisible);
   };
 
   const handleLogout = () => {
@@ -62,7 +62,7 @@ const Header = () => {
         
       </Icons>
     </HeaderContainer>
-     <MenuWrapper isMenuVisible={isMenuVisible}>
+     <MenuWrapper ismenuvisible={ismenuvisible}>
      <Menu />
    </MenuWrapper>
    </>

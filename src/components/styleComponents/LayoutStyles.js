@@ -21,10 +21,10 @@ export const PageContent = styled.div`
 
 export const PageContentWrapper = styled.div`
   margin-top: 3.75rem;
-  padding-left: ${props => (props.isMenuVisible ? '25rem' : '20rem')}; 
+  padding-left: ${props => (props.isMenuVisible ? '25rem' : '20rem')};
   transition: padding-left 0.3s ease;
   flex: 1;
-  overflow-y: auto; 
+  overflow-y: auto;
 `;
 
 export const HeaderContainer = styled.div`

@@ -19,7 +19,7 @@ const LoginForm = ({ setHeaderTitle }) => {
 
   useEffect(() => {
     setHeaderTitle('Login');
-  }, [setHeaderTitle]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

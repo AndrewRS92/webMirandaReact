@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaTrash } from 'react-icons/fa';
-import { getRoomListThunk, addRoomThunk, deleteRoomThunk} from '../../features/slices/room/roomThunk';
+import { FaTrash, FaEdit  } from 'react-icons/fa';
+import { getRoomListThunk, addRoomThunk, deleteRoomThunk } from '../../features/slices/room/roomThunk';
+import { setEditRoom } from '../../features/slices/room/roomSlice';
 import {
   Table,
   TableContainer,
@@ -27,6 +28,7 @@ const Room = () => {
   const [filter, setFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
+  
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -42,6 +44,11 @@ const Room = () => {
     dispatch(deleteRoomThunk(roomId));
   };
 
+  const handleEditRoom = (room) => {
+    setEditRoom(room);
+    setShowPopup(true);
+  };
+
   const filteredData = tableData.filter(row => {
     if (filter === 'all') return true;
     return filter === 'available' ? row.available : !row.available;
@@ -54,6 +61,7 @@ const Room = () => {
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   const handleNewRoomClick = () => {
+    setEditRoom(null);
     setShowPopup(true);
   };
   
@@ -62,7 +70,6 @@ const Room = () => {
   };
 
   const handleSaveRoom = (newRoom) => {
-    // Ensure the correct boolean value is set for the availability status
     newRoom.available = newRoom.status === 'available';
     dispatch(addRoomThunk(newRoom));
     setShowPopup(false); 
@@ -102,6 +109,7 @@ const Room = () => {
               <TableCell>${row.price}</TableCell>
               <TableCell>${row.offerPrice}</TableCell>
               <TableCell>
+              <FaEdit onClick={() => handleEditRoom(row)} style={{ marginRight: '10px', cursor: 'pointer' }} />
                 <FaTrash onClick={() => handleDeleteRoom(row.id)} style={{ marginRight: '10px', cursor: 'pointer' }} />
                 <RoomStatus status={row.available ? 'available' : 'booked'}>
                   {row.available ? 'Available' : 'Booked'}

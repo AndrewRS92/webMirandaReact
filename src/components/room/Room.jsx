@@ -57,6 +57,8 @@ const Room = () => {
   };
 
   const handleSaveRoom = (newRoom) => {
+    // Ensure the correct boolean value is set for the availability status
+    newRoom.available = newRoom.status === 'available';
     dispatch(addRoomThunk(newRoom));
     setShowPopup(false); 
   };
@@ -76,7 +78,6 @@ const Room = () => {
       <Table>
         <TableHead>
           <tr>
-            <TableHeader>Photo</TableHeader>
             <TableHeader>Room Number</TableHeader>
             <TableHeader>Room ID</TableHeader>
             <TableHeader>Room Type</TableHeader>
@@ -89,8 +90,7 @@ const Room = () => {
         <TableBody>
           {currentItems.map((row, index) => (
             <TableRow key={index}>
-              {/* <TableCell><img src={row.images[0]} alt="Room" style={{ width: '5rem', height: '5rem' }} /></TableCell> */}
-              <TableCell>{row.roomNumber}</TableCell>
+              <TableCell>{row.name}</TableCell>
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.bedType}</TableCell>
               <TableCell>{row.facilities.join(', ')}</TableCell>

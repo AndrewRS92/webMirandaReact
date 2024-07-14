@@ -13,7 +13,6 @@ import {
   BookingStatus
 } from './BookingTableStyles';
 
-
 interface Booking {
   guest: string;
   orderdate: string;
@@ -30,7 +29,12 @@ const Bookings: React.FC = () => {
 
   useEffect(() => {
     fetch('/BookingsData.json')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then((data: Booking[]) => setTableData(data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);

@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useEffect, useReducer, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -16,12 +15,21 @@ import ProtectedRoute from './components/ProtectedRoute';
 import store from './features'; 
 import { initializeLocalStorage } from './components/DataService';
 
-const initialState = {
+interface State {
+  ismenuvisible: boolean;
+  headerTitle: string;
+}
+
+type Action = 
+  | { type: 'TOGGLE_MENU' }
+  | { type: 'SET_HEADER_TITLE'; payload: string };
+
+const initialState: State = {
   ismenuvisible: false,
   headerTitle: 'Dashboard',
 };
 
-const reducer = (state, action) => {
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'TOGGLE_MENU':
       return { ...state, ismenuvisible: !state.ismenuvisible };
@@ -32,9 +40,9 @@ const reducer = (state, action) => {
   }
 };
 
-const App = () => {
+const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<{ id: number; title: string; completed: boolean }[]>([]);
 
   useEffect(() => {
     initializeLocalStorage();
@@ -47,7 +55,7 @@ const App = () => {
     dispatch({ type: 'TOGGLE_MENU' });
   };
 
-  const setHeaderTitle = (title) => {
+  const setHeaderTitle = (title: string) => {
     dispatch({ type: 'SET_HEADER_TITLE', payload: title });
   };
 
@@ -61,7 +69,7 @@ const App = () => {
                 <Header toggleMenu={toggleMenu} title={state.headerTitle} />
               </HeaderContainer>
               <MainContent>
-                <PageContentWrapper $ismenuvisible={state.ismenuvisible}>
+                <PageContentWrapper ismenuvisible={state.ismenuvisible}>
                   <Routes>
                     <Route 
                       path="/LoginForm" 
@@ -92,14 +100,14 @@ const App = () => {
                       element={<ProtectedRoute element={<EditUser />} setHeaderTitle={setHeaderTitle} title="Edit User" />}
                     />
                   </Routes>
-                  <div>
+                  {/* <div>
                     {todos.map((todo) => (
                       <div key={todo.id}>
                         <h1>{todo.title}</h1>
                         <p>{todo.completed.toString()}</p>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
                 </PageContentWrapper>
               </MainContent>
             </LayoutContainer>

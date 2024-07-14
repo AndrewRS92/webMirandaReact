@@ -1,6 +1,6 @@
-import Menu from './Menu';
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import React, { useState, useContext } from 'react';
+import Menu from './Menu'
 import { FiLogOut } from 'react-icons/fi';
 import { UserContext } from './context/UserContext';
 import {
@@ -12,16 +12,22 @@ import {
   Icons,
   LogoutButton
 } from './styleComponents/HeaderStyles';
-// import logo from '../images/logo.png'
+// import logo from '../images/logo.png';
 
-const Header = () => {
+interface HeaderProps {
+  toggleMenu: () => void;
+  title: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ toggleMenu, title }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { logout } = useContext(UserContext); 
-  const [ismenuvisible, setismenuvisible] = useState(false);
+  const { logout } = React.useContext(UserContext); 
+  const [ismenuvisible, setismenuvisible] = React.useState(false);
 
-  const toggleMenu = () => {
+  const handleToggleMenu = () => {
     setismenuvisible(!ismenuvisible);
+    toggleMenu();
   };
 
   const handleLogout = () => {
@@ -29,27 +35,18 @@ const Header = () => {
     navigate('/LoginForm');
   };
 
-  const getPageName = (pathname) => {
-    const pathSegments = pathname.split('/').filter(Boolean);
-    if (pathSegments.length === 0) return 'Dashboard';
-    return pathSegments[0];
-  };
-
   return (
     <>
       <HeaderContainer>
-        {/* <img src={logo} alt="Logo" className="logo" /> */}
-        <Dropdown>
-          <MenuIcon onClick={toggleMenu} />
-        </Dropdown>
-        <Nav>{getPageName(location.pathname)}</Nav>
+        <MenuIcon onClick={handleToggleMenu} />
+        <Nav>{title}</Nav>
         <Icons>
           <LogoutButton onClick={handleLogout}>
             <FiLogOut size={24} />
           </LogoutButton>
         </Icons>
       </HeaderContainer>
-      <MenuWrapper ismenuvisible={ismenuvisible ? 'true' : undefined}>
+      <MenuWrapper ismenuvisible={ismenuvisible}>
         <Menu />
       </MenuWrapper>
     </>

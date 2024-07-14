@@ -1,4 +1,5 @@
-import React, { useEffect, useReducer } from 'react';
+// src/App.jsx
+import React, { useEffect, useReducer, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Dashboard from './components/dashboard/Dashboard';
@@ -33,9 +34,13 @@ const reducer = (state, action) => {
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     initializeLocalStorage();
+    fetch("https://jsonplaceholder.typicode.com/todos")
+      .then((response) => response.json())
+      .then((json) => setTodos(json));
   }, []);
 
   const toggleMenu = () => {
@@ -87,6 +92,14 @@ const App = () => {
                       element={<ProtectedRoute element={<EditUser />} setHeaderTitle={setHeaderTitle} title="Edit User" />}
                     />
                   </Routes>
+                  <div>
+                    {todos.map((todo) => (
+                      <div key={todo.id}>
+                        <h1>{todo.title}</h1>
+                        <p>{todo.completed.toString()}</p>
+                      </div>
+                    ))}
+                  </div>
                 </PageContentWrapper>
               </MainContent>
             </LayoutContainer>

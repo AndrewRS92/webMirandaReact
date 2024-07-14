@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaTrash, FaEdit  } from 'react-icons/fa';
+import { FaTrash, FaEdit } from 'react-icons/fa';
 import { getRoomListThunk, addRoomThunk, deleteRoomThunk } from '../../features/slices/room/roomThunk';
-import { setEditRoom } from '../../features/slices/room/roomSlice';
 import {
   Table,
   TableContainer,
@@ -24,11 +23,12 @@ import NewRoomPopup from './NewRoomPopup';
 
 const Room = () => {
   const dispatch = useDispatch();
-  const { dataList: tableData} = useSelector((state) => state.room);
+  const { dataList: tableData } = useSelector((state) => state.room);
   const [filter, setFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
-  
+  const [editRoom, setEditRoom] = useState(null);
+
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -85,7 +85,6 @@ const Room = () => {
         <NewRoomButtonContainer>
           <NewRoomButton onClick={handleNewRoomClick}>+ New Room</NewRoomButton>
         </NewRoomButtonContainer>
-
       </FilterBar>
       <Table>
         <TableHead>
@@ -109,7 +108,7 @@ const Room = () => {
               <TableCell>${row.price}</TableCell>
               <TableCell>${row.offerPrice}</TableCell>
               <TableCell>
-              <FaEdit onClick={() => handleEditRoom(row)} style={{ marginRight: '10px', cursor: 'pointer' }} />
+                <FaEdit onClick={() => handleEditRoom(row)} style={{ marginRight: '10px', cursor: 'pointer' }} />
                 <FaTrash onClick={() => handleDeleteRoom(row.id)} style={{ marginRight: '10px', cursor: 'pointer' }} />
                 <RoomStatus status={row.available ? 'available' : 'booked'}>
                   {row.available ? 'Available' : 'Booked'}
@@ -130,7 +129,7 @@ const Room = () => {
           Next
         </PaginationButton>
       </Pagination>
-      {showPopup && <NewRoomPopup onClose={handleClosePopup} onSave={handleSaveRoom} />}
+      {showPopup && <NewRoomPopup room={editRoom} onClose={handleClosePopup} onSave={handleSaveRoom} />}
     </TableContainer>
   );
 };

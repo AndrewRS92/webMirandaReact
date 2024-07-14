@@ -17,14 +17,14 @@ import store from './features';
 import { initializeLocalStorage } from './components/DataService';
 
 const initialState = {
-  isMenuVisible: false,
+  ismenuvisible: false,
   headerTitle: 'Dashboard',
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'TOGGLE_MENU':
-      return { ...state, isMenuVisible: !state.isMenuVisible };
+      return { ...state, ismenuvisible: !state.ismenuvisible };
     case 'SET_HEADER_TITLE':
       return { ...state, headerTitle: action.payload };
     default:
@@ -61,7 +61,7 @@ const App = () => {
                 <Header toggleMenu={toggleMenu} title={state.headerTitle} />
               </HeaderContainer>
               <MainContent>
-                <PageContentWrapper $isMenuVisible={state.isMenuVisible}>
+                <PageContentWrapper $ismenuvisible={state.ismenuvisible}>
                   <Routes>
                     <Route 
                       path="/LoginForm" 

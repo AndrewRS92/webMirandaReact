@@ -40,12 +40,22 @@ const NewRoomPopup = ({ room, onClose, onSave }) => {
     facilities: [],
     price: '',
     offerPrice: '',
-    status: 'available' 
+    status: 'available'
   });
 
   useEffect(() => {
     if (room) {
       setFormData(room);
+    } else {
+      setFormData({
+        roomNumber: '',
+        roomId: '',
+        bedType: '',
+        facilities: [],
+        price: '',
+        offerPrice: '',
+        status: 'available'
+      });
     }
   }, [room]);
 

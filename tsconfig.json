@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "jsx": "react",  // Configuración para soportar JSX
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist", // Directorio de salida para archivos compilados
+    "rootDir": "./src",  // Directorio raíz de los archivos fuente
+    "allowJs": true,  // Permitir archivos JavaScript
+    "checkJs": false  // Deshabilitar la verificación de tipos en archivos JavaScript
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}

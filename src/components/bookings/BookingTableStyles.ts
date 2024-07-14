@@ -92,7 +92,11 @@ export const FilterOption = styled.button`
   }
 `;
 
-export const BookingStatus = styled.p`
+interface BookingStatusProps {
+  status: string;
+}
+
+export const BookingStatus = styled.p<BookingStatusProps>`
   width: 6em;
   text-align: center;
   padding: 0.5em;

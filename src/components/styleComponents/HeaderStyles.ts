@@ -1,8 +1,4 @@
 import styled from 'styled-components';
-import { IoIosSearch } from "react-icons/io";
-import { FaRegEnvelope } from "react-icons/fa6";
-import { GoBell } from "react-icons/go";
-import { BiCommentDetail } from "react-icons/bi";
 import { HiMenuAlt2 } from "react-icons/hi";
 
 export const HeaderContainer = styled.div`
@@ -53,8 +49,8 @@ export const Icons = styled.div`
   gap: 1.25rem;
 `;
 
-export const MenuWrapper = styled.div`
-  display: ${(props) => (props.ismenuvisible ? 'flex' : 'none')};
+export const MenuWrapper = styled.div<{ ismenuvisible: boolean }>`
+  display: ${({ ismenuvisible }) => (ismenuvisible ? 'flex' : 'none')};
   flex-direction: column;
   position: absolute;
   top: 3.75rem;

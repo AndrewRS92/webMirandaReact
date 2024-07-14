@@ -1,4 +1,3 @@
-// cypress/e2e/authentication.spec.js
 describe('Authentication', () => {
     beforeEach(() => {
       cy.fixture('users.json').as('users');

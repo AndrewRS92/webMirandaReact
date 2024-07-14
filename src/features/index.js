@@ -4,7 +4,6 @@ import roomReducer from './slices/room/roomSlice';
 const store = configureStore({
   reducer: {
     room: roomReducer,
-    // otros reducers aquí
   },
 });
 

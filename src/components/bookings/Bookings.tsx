@@ -1,4 +1,3 @@
-// src/pages/Bookings.js
 import React, { useState, useEffect } from 'react';
 import {
   Table,
@@ -14,18 +13,29 @@ import {
   BookingStatus
 } from './BookingTableStyles';
 
-const Bookings = () => {
-  const [tableData, setTableData] = useState([]);
-  const [filter, setFilter] = useState('all');
+
+interface Booking {
+  guest: string;
+  orderdate: string;
+  checkin: string;
+  checkout: string;
+  specialRequest: string;
+  roomtype: string;
+  status: string;
+}
+
+const Bookings: React.FC = () => {
+  const [tableData, setTableData] = useState<Booking[]>([]);
+  const [filter, setFilter] = useState<string>('all');
 
   useEffect(() => {
     fetch('/BookingsData.json')
       .then(response => response.json())
-      .then(data => setTableData(data))
+      .then((data: Booking[]) => setTableData(data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
-  const handleFilterChange = (newFilter) => {
+  const handleFilterChange = (newFilter: string) => {
     setFilter(newFilter);
   };
 

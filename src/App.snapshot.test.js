@@ -1,4 +1,3 @@
-// src/App.snapshot.test.js
 import renderer from "react-test-renderer";
 import App from "./App";
 

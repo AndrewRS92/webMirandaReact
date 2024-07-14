@@ -12,6 +12,7 @@ export const PopupContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  
 `;
 
 export const PopupContent = styled.div`
@@ -43,6 +44,7 @@ export const CloseButton = styled.button`
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+  color: black;
 `;
 
 export const SaveButton = styled.button`

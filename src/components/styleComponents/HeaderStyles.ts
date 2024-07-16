@@ -8,30 +8,28 @@ export const HeaderContainer = styled.div`
   background-color: white;
   position: fixed;
   top: 0;
-  width: 80%;
+  width: 100%;
   color: black;
   padding: 0.625rem 1.25rem;
-  margin-left: 8rem;
-
-  .logo {
-    height: 5rem;
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-  }
+  z-index: 1000; /* Para asegurar que el header esté siempre encima */
 `;
 
 export const Nav = styled.nav`
   font-size: 1.5rem;
   font-weight: bold;
   background-color: white;
-  position: absolute;
-  margin-left: 6rem;
 `;
 
-export const Dropdown = styled.div`
-  position: relative;
+export const MenuWrapper = styled.div<{ $ismenuvisible: boolean }>`
+  display: ${({ $ismenuvisible }) => ($ismenuvisible ? 'flex' : 'none')};
+  flex-direction: column;
+  position: absolute;
+  top: 3.75rem;
+  left: 0;
+  width: 15.625rem;
   background-color: white;
+  box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.1);
+  z-index: 999; /* Asegurar que el menú esté encima del contenido */
 `;
 
 export const MenuIcon = styled(HiMenuAlt2)`
@@ -40,22 +38,12 @@ export const MenuIcon = styled(HiMenuAlt2)`
   background-color: transparent;
   color: black;
   border: none;
-  margin-left: 1.80rem;
-  margin-right: 1.80rem;
+  margin-right: 1.25rem;
 `;
 
 export const Icons = styled.div`
   display: flex;
   gap: 1.25rem;
-`;
-
-export const MenuWrapper = styled.div<{ ismenuvisible: boolean }>`
-  display: ${({ ismenuvisible }) => (ismenuvisible ? 'flex' : 'none')};
-  flex-direction: column;
-  position: absolute;
-  top: 3.75rem;
-  left: 0;
-  width: 15.625rem;
 `;
 
 export const LogoutButton = styled.button`

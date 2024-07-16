@@ -20,14 +20,27 @@ import {
   NewRoomButton
 } from './RoomTableStyles';
 import NewRoomPopup from './NewRoomPopup';
+import { AppDispatch, RootState } from '../../features/store';
 
-const Room = () => {
-  const dispatch = useDispatch();
-  const { dataList: tableData } = useSelector((state) => state.room);
-  const [filter, setFilter] = useState('all');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showPopup, setShowPopup] = useState(false);
-  const [editRoom, setEditRoom] = useState(null);
+interface RoomData {
+  id: number;
+  name: string;
+  images: string[];
+  bedType: string;
+  facilities: string[];
+  price: number;
+  offerPrice: number;
+  available: boolean;
+  status?: 'available' | 'booked';
+}
+
+const Room: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const tableData = useSelector((state: RootState) => state.room.dataList) as RoomData[];
+  const [filter, setFilter] = useState<string>('all');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [editRoom, setEditRoom] = useState<RoomData | null>(null);
 
   const itemsPerPage = 10;
 
@@ -35,16 +48,16 @@ const Room = () => {
     dispatch(getRoomListThunk());
   }, [dispatch]);
 
-  const handleFilterChange = (newFilter) => {
+  const handleFilterChange = (newFilter: string): void => {
     setFilter(newFilter);
     setCurrentPage(1);
   };
 
-  const handleDeleteRoom = (roomId) => {
+  const handleDeleteRoom = (roomId: number): void => {
     dispatch(deleteRoomThunk(roomId));
   };
 
-  const handleEditRoom = (room) => {
+  const handleEditRoom = (room: RoomData): void => {
     setEditRoom(room);
     setShowPopup(true);
   };
@@ -60,19 +73,25 @@ const Room = () => {
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-  const handleNewRoomClick = () => {
+  const handleNewRoomClick = (): void => {
     setEditRoom(null);
     setShowPopup(true);
   };
   
-  const handleClosePopup = () => {
+  const handleClosePopup = (): void => {
     setShowPopup(false); 
   };
 
-  const handleSaveRoom = (newRoom) => {
-    newRoom.available = newRoom.status === 'available';
-    dispatch(addRoomThunk(newRoom));
-    setShowPopup(false); 
+  const handleSaveRoom = (newRoom: RoomData): void => {
+    const roomToSave: RoomData = {
+      ...newRoom,
+      id: newRoom.id ,
+      available: newRoom.status === 'available',
+      images: newRoom.images || [] // asegúrate de manejar las imágenes correctamente
+    };
+
+    dispatch(addRoomThunk(roomToSave));
+    setShowPopup(false);
   };
 
   return (

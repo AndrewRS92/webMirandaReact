@@ -1,18 +1,16 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Menu from './Menu'
+import { useNavigate } from 'react-router-dom';
+import Menu from './Menu';
 import { FiLogOut } from 'react-icons/fi';
-import { UserContext } from './context/UserContext';
+import { useUserContext } from './context/UserContext';
 import {
   HeaderContainer,
   Nav,
-  Dropdown,
   MenuWrapper,
   MenuIcon,
   Icons,
   LogoutButton
 } from './styleComponents/HeaderStyles';
-// import logo from '../images/logo.png';
 
 interface HeaderProps {
   toggleMenu: () => void;
@@ -20,13 +18,12 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ toggleMenu, title }) => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const { logout } = React.useContext(UserContext); 
-  const [ismenuvisible, setismenuvisible] = React.useState(false);
+  const { logout } = useUserContext();
+  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
 
   const handleToggleMenu = () => {
-    setismenuvisible(!ismenuvisible);
+    setIsMenuVisible(!isMenuVisible);
     toggleMenu();
   };
 
@@ -46,8 +43,8 @@ const Header: React.FC<HeaderProps> = ({ toggleMenu, title }) => {
           </LogoutButton>
         </Icons>
       </HeaderContainer>
-      <MenuWrapper ismenuvisible={ismenuvisible}>
-        <Menu />
+      <MenuWrapper $ismenuvisible={isMenuVisible}>
+        <Menu isMenuVisible={isMenuVisible} />
       </MenuWrapper>
     </>
   );

@@ -102,7 +102,11 @@ export const FilterOption = styled.button`
   }
 `;
 
-export const RoomStatus = styled.p`
+interface RoomStatusProps {
+  status: 'available' | 'booked';
+}
+
+export const RoomStatus = styled.p<RoomStatusProps>`
   width: 6rem;
   text-align: center;
   padding: 0.5rem;
@@ -127,7 +131,6 @@ export const RoomStatus = styled.p`
     }
   }}
 `;
-
 export const Pagination = styled.div`
   display: flex;
   justify-content: center;

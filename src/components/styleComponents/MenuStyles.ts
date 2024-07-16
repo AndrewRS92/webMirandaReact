@@ -6,10 +6,8 @@ export const MenuContainer = styled.div`
   box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
   padding: 1.25rem;
-  height: 19rem;
-  color: #799283;
+  background-color: white;
 `;
 
 export const MenuNav = styled.nav`
@@ -33,9 +31,7 @@ export const MenuLink = styled(NavLink)`
   font-size: 1.125rem;
   padding: 0.625rem 1.25rem;
   display: block;
-  margin-bottom: 0.625rem;
-  text-decoration: none;
-  position: relative;
+  transition: color 0.3s;
 
   &:hover {
     color: #ff0000;
@@ -44,15 +40,6 @@ export const MenuLink = styled(NavLink)`
   &.active {
     color: #ff0000;
     font-weight: bold;
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      height: 100%;
-      width: 0.25rem;
-      background-color: #ff0000;
-    }
   }
 `;
 

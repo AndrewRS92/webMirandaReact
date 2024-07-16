@@ -1,16 +1,21 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { UserContext } from './context/UserContext';
+import React, { useContext, useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { UserContext, User } from '../components/context/UserContext';
 import {
   EditUserContainer,
   EditUserForm,
   EditUserInput,
   EditUserButton,
   EditUserLabel
-} from './styleComponents/EditUserStyle';
+} from '../components/styleComponents/EditUserStyle';
 
-const EditUser = () => {
-  const { user, updateUser, isEditing, setIsEditing } = useContext(UserContext);
-  const [formData, setFormData] = useState([]);
+const EditUser: React.FC = () => {
+  const { user, updateUser, isEditing, setIsEditing } = useContext(UserContext)!;
+  const [formData, setFormData] = useState<User>({
+    id: 0,
+    name: '',
+    email: '',
+    password: '',
+  });
 
   useEffect(() => {
     if (user) {
@@ -18,12 +23,12 @@ const EditUser = () => {
     }
   }, [user]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     updateUser(formData);
     setIsEditing(false); 

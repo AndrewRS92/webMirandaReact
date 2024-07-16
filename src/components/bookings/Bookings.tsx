@@ -28,18 +28,23 @@ const Bookings: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
 
   useEffect(() => {
-    fetch('/BookingsData.json')
-      .then(response => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/BookingsData.json');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json();
-      })
-      .then((data: Booking[]) => setTableData(data))
-      .catch(error => console.error('Error fetching data:', error));
+        const data: Booking[] = await response.json();
+        setTableData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handleFilterChange = (newFilter: string) => {
+  const handleFilterChange = (newFilter: string): void => {
     setFilter(newFilter);
   };
 

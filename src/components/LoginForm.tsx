@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from './context/UserContext';
+import { useUserContext } from '../components/context/UserContext';
 import { 
   LoginContainer, 
   LoginFormWrapper, 
@@ -10,18 +10,22 @@ import {
   LoginError 
 } from './styleComponents/LoginStyles';
 
-const LoginForm = ({ setHeaderTitle }) => {
-  const { login } = useContext(UserContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+interface LoginFormProps {
+  setHeaderTitle: (title: string) => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ setHeaderTitle }) => {
+  const { login } = useUserContext();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    setHeaderTitle('Login');
-  }, []);
+    ;
+  }, [setHeaderTitle]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const success = await login(email, password);
     if (!success) {

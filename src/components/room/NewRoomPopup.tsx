@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select';
+import Select, { MultiValue } from 'react-select';
 import {
   PopupContainer,
   PopupContent,
@@ -32,14 +32,34 @@ const bedTypeOptions = [
   { value: 'Suite', label: 'Suite' }
 ];
 
-const NewRoomPopup = ({ room, onClose, onSave }) => {
-  const [formData, setFormData] = useState({
-    roomNumber: '',
-    roomId: '',
+interface RoomData {
+  id: number;
+  name: string;
+  images: string[];
+  bedType: string;
+  facilities: string[];
+  price: number;
+  offerPrice: number;
+  available: boolean;
+  status?: 'available' | 'booked';
+}
+
+interface NewRoomPopupProps {
+  room?: RoomData | null;
+  onClose: () => void;
+  onSave: (room: RoomData) => void;
+}
+
+const NewRoomPopup: React.FC<NewRoomPopupProps> = ({ room, onClose, onSave }) => {
+  const [formData, setFormData] = useState<RoomData>({
+    id: 0,
+    name: '',
+    images: [],
     bedType: '',
     facilities: [],
-    price: '',
-    offerPrice: '',
+    price: 0,
+    offerPrice: 0,
+    available: true,
     status: 'available'
   });
 
@@ -48,23 +68,25 @@ const NewRoomPopup = ({ room, onClose, onSave }) => {
       setFormData(room);
     } else {
       setFormData({
-        roomNumber: '',
-        roomId: '',
+        id: 0,
+        name: '',
+        images: [],
         bedType: '',
         facilities: [],
-        price: '',
-        offerPrice: '',
+        price: 0,
+        offerPrice: 0,
+        available: true,
         status: 'available'
       });
     }
   }, [room]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFacilitiesChange = (selectedOptions) => {
+  const handleFacilitiesChange = (selectedOptions: MultiValue<{ value: string; label: string }>) => {
     const facilities = selectedOptions.map(option => option.value);
     setFormData({ ...formData, facilities });
   };
@@ -82,19 +104,15 @@ const NewRoomPopup = ({ room, onClose, onSave }) => {
         </PopupHeader>
         <PopupBody>
           <InputGroup>
-            <InputLabel htmlFor="roomNumber">Room Number</InputLabel>
-            <InputField type="text" name="roomNumber" value={formData.roomNumber} onChange={handleChange} />
-          </InputGroup>
-          <InputGroup>
-            <InputLabel htmlFor="roomId">Room ID</InputLabel>
-            <InputField type="text" name="roomId" value={formData.roomId} onChange={handleChange} />
+            <InputLabel htmlFor="name">Room Name</InputLabel>
+            <InputField type="text" name="name" value={formData.name} onChange={handleChange} />
           </InputGroup>
           <InputGroup>
             <InputLabel htmlFor="bedType">Bed Type</InputLabel>
             <SelectField
               name="bedType"
               value={bedTypeOptions.find(option => option.value === formData.bedType)}
-              onChange={(option) => setFormData({ ...formData, bedType: option.value })}
+              onChange={(option) => setFormData({ ...formData, bedType: option?.value || '' })}
               options={bedTypeOptions}
             />
           </InputGroup>

@@ -11,7 +11,7 @@ import Room from './components/room/Room';
 import { LayoutContainer, MainContent, HeaderContainer, PageContentWrapper } from './components/styleComponents/LayoutStyles';
 import { UserProvider } from './components/context/UserContext'; 
 import ProtectedRoute from './components/ProtectedRoute';
-import store from './features/store'; 
+import { store } from './features/store';
 import { Provider } from 'react-redux';
 
 interface State {

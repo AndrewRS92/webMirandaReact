@@ -1,13 +1,18 @@
-import { configureStore } from '@reduxjs/toolkit';
-import roomReducer from './slices/room/roomSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import roomReducer from "../features/slices/room/roomSlice";
+import bookingReducer from "../features/slices/bookings/bookingSlice";
+import contactReducer from "../features/slices/contact/contactSlice";
+import userReducer from "../features/slices/user/usersSlice";
 
-const store = configureStore({
-  reducer: {
-    room: roomReducer,
-  },
+export const store = configureStore({
+    reducer: {
+        room: roomReducer,
+        booking: bookingReducer,
+        contact: contactReducer,
+        user: userReducer,
+    }
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-
-export default store;
+export type AppStore = typeof store;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];

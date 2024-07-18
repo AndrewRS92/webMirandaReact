@@ -92,6 +92,21 @@ export const FilterOption = styled.button`
   }
 `;
 
+export const Pagination = styled.div`
+
+`;
+
+export const PaginationButton = styled.button`
+
+`;
+
+export const PaginationInfo = styled.span`
+
+`;
+
+
+
+
 interface BookingStatusProps {
   status: string;
 }

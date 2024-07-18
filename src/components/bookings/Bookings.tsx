@@ -10,7 +10,10 @@ import {
   NotesButton,
   FilterBar,
   FilterOption,
-  BookingStatus
+  BookingStatus,
+  Pagination,
+  PaginationButton,
+  PaginationInfo
 } from './BookingTableStyles';
 
 interface Booking {
@@ -26,9 +29,26 @@ interface Booking {
 const Bookings: React.FC = () => {
   const [tableData, setTableData] = useState<Booking[]>([]);
   const [filter, setFilter] = useState<string>('all');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [list, setList] = useState<Booking[]>([]);
+  const [pages, setPages] = useState<Booking[][]>([]);
+  const [status, setStatus] = useState<string>('idle');
+  const [error, setError] = useState<string | null>(null);
+
+  const itemsPerPage = 10;
+
+  const createPagination = (data: Booking[], itemsPerPage: number): Booking[][] => {
+    const pages = [];
+    for (let i = 0; i < data.length; i += itemsPerPage) {
+      pages.push(data.slice(i, i + itemsPerPage));
+    }
+    return pages;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
+      setStatus('pending');
       try {
         const response = await fetch('/BookingsData.json');
         if (!response.ok) {
@@ -36,22 +56,51 @@ const Bookings: React.FC = () => {
         }
         const data: Booking[] = await response.json();
         setTableData(data);
+        setList(data);
+        setPages(createPagination(data, itemsPerPage));
+        setStatus('fulfilled');
       } catch (error) {
         console.error('Error fetching data:', error);
+        setError('Error fetching data');
+        setStatus('rejected');
       }
     };
 
-    fetchData();
-  }, []);
+    if (status === 'idle') {
+      fetchData();
+    } else if (status === 'pending') {
+      setIsLoading(true);
+    } else if (status === 'fulfilled') {
+      setIsLoading(false);
+    } else if (status === 'rejected') {
+      alert(error);
+    }
+  }, [status, tableData, error]);
 
   const handleFilterChange = (newFilter: string): void => {
     setFilter(newFilter);
+    setCurrentPage(1);
+    const filteredData = tableData.filter(row => {
+      if (newFilter === 'all') return true;
+      return row.status.toLowerCase() === newFilter;
+    });
+    setList(filteredData);
+    setPages(createPagination(filteredData, itemsPerPage));
   };
 
-  const filteredData = tableData.filter(row => {
-    if (filter === 'all') return true;
-    return row.status.toLowerCase() === filter;
-  });
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = pages[currentPage - 1] || [];
+
+  const totalPages = pages.length;
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <TableContainer>
@@ -74,7 +123,7 @@ const Bookings: React.FC = () => {
           </tr>
         </TableHead>
         <TableBody>
-          {filteredData.map((row, index) => (
+          {currentItems.map((row, index) => (
             <TableRow key={index}>
               <TableCell>{row.guest}</TableCell>
               <TableCell>{row.orderdate}</TableCell>
@@ -91,6 +140,17 @@ const Bookings: React.FC = () => {
           ))}
         </TableBody>
       </Table>
+      <Pagination>
+        <PaginationButton onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+          Previous
+        </PaginationButton>
+        <PaginationInfo>
+          Page {currentPage} of {totalPages}
+        </PaginationInfo>
+        <PaginationButton onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
+          Next
+        </PaginationButton>
+      </Pagination>
     </TableContainer>
   );
 };

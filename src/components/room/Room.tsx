@@ -21,6 +21,7 @@ import {
 } from './RoomTableStyles';
 import NewRoomPopup from './NewRoomPopup';
 import { AppDispatch, RootState } from '../../features/store';
+import { UserContext } from '../context/UserContext'; 
 
 interface RoomData {
   id: number;
@@ -37,16 +38,39 @@ interface RoomData {
 const Room: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const tableData = useSelector((state: RootState) => state.room.dataList) as RoomData[];
+  const roomStatus = useSelector((state: RootState) => state.room.status);
+  const roomError = useSelector((state: RootState) => state.room.error);
   const [filter, setFilter] = useState<string>('all');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [editRoom, setEditRoom] = useState<RoomData | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [list, setList] = useState<RoomData[]>([]);
+  const [roomPages, setRoomPages] = useState<RoomData[][]>([]);
 
   const itemsPerPage = 10;
 
+  const createPagination = (data: RoomData[], itemsPerPage: number): RoomData[][] => {
+    const pages = [];
+    for (let i = 0; i < data.length; i += itemsPerPage) {
+      pages.push(data.slice(i, i + itemsPerPage));
+    }
+    return pages;
+  };
+
   useEffect(() => {
-    dispatch(getRoomListThunk());
-  }, [dispatch]);
+    if (roomStatus === "idle") {
+      dispatch(getRoomListThunk());
+    } else if (roomStatus === "pending") {
+      setIsLoading(true);
+    } else if (roomStatus === "fulfilled") {
+      setList(tableData);
+      setRoomPages(createPagination(tableData, itemsPerPage));
+      setIsLoading(false);
+    } else if (roomStatus === "rejected") {
+      alert(roomError);
+    }
+  }, [roomStatus, tableData, roomError, dispatch]);
 
   const handleFilterChange = (newFilter: string): void => {
     setFilter(newFilter);
@@ -87,7 +111,7 @@ const Room: React.FC = () => {
       ...newRoom,
       id: newRoom.id ,
       available: newRoom.status === 'available',
-      images: newRoom.images || [] // asegúrate de manejar las imágenes correctamente
+      images: newRoom.images || [] 
     };
 
     dispatch(addRoomThunk(roomToSave));

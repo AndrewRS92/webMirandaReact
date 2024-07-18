@@ -2,98 +2,58 @@ import React, { useEffect, useState } from 'react';
 import { IoBedOutline, IoLogOutOutline, IoLogInOutline } from "react-icons/io5";
 import { LuCalendarCheck2 } from "react-icons/lu";
 import { DashboardGrid, KPI, KPIpicture, KPItext } from './DashboardStyles';
-import CommentsSlider from '../commentSlider/commentsSlider'; 
-
-interface Booking {
-  id: number;
-  guest: string;
-  orderdate: string;
-  checkin: string;
-  checkout: string;
-  specialRequest: string;
-  roomtype: string;
-  status: 'Check In' | 'Check Out' | 'In Progress';
-}
-
-interface Room {
-  id: number;
-  name: string;
-  available: boolean;
-  bedType: string;
-  facilities: string[];
-  price: number;
-  offerPrice: number;
-  images: string[];
-}
+import CommentsSlider from '../commentSlider/commentsSlider';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../features/store';
+import { getBookingListThunk } from '../../features/slices/bookings/bookingThunk';
+import { getRoomListThunk } from '../../features/slices/room/roomThunk';
 
 const Dashboard: React.FC = () => {
-  const [bookings, setBookings] = useState<Booking[]>([]);
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [bookingStatus, setBookingStatus] = useState<string>('idle');
-  const [roomStatus, setRoomStatus] = useState<string>('idle');
+  const dispatch = useDispatch<AppDispatch>();
+
+  const bookingStatus = useSelector((state: RootState) => state.booking.status);
+  const bookingDataList = useSelector((state: RootState) => state.booking.dataList);
+  const bookingError = useSelector((state: RootState) => state.booking.error);
+
+  const roomStatus = useSelector((state: RootState) => state.room.status);
+  const roomDataList = useSelector((state: RootState) => state.room.dataList);
+  const roomError = useSelector((state: RootState) => state.room.error);
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  const fetchBookings = async () => {
-    setBookingStatus('pending');
-    try {
-      const response = await fetch('/BookingsData.json');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data: Booking[] = await response.json();
-      setBookings(data);
-      setBookingStatus('fulfilled');
-    } catch (error) {
-      console.error('Error fetching bookings:', error);
-      setError('Error fetching bookings');
-      setBookingStatus('rejected');
-    }
-  };
-
-  const fetchRooms = async () => {
-    setRoomStatus('pending');
-    try {
-      const response = await fetch('/RoomData.json');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data: Room[] = await response.json();
-      setRooms(data);
-      setRoomStatus('fulfilled');
-    } catch (error) {
-      console.error('Error fetching rooms:', error);
-      setError('Error fetching rooms');
-      setRoomStatus('rejected');
-    }
-  };
 
   useEffect(() => {
     if (bookingStatus === 'idle') {
-      fetchBookings();
+      dispatch(getBookingListThunk());
+    } else if (bookingStatus === 'pending') {
+      setIsLoading(true);
+    } else if (bookingStatus === 'fulfilled') {
+      setIsLoading(false);
+    } else if (bookingStatus === 'rejected') {
+      setError(bookingError);
+      alert(bookingError);
     }
-    if (roomStatus === 'idle') {
-      fetchRooms();
-    }
-  }, [bookingStatus, roomStatus]);
+  }, [bookingStatus, bookingDataList, dispatch, bookingError]);
 
   useEffect(() => {
-    if (bookingStatus === 'pending' || roomStatus === 'pending') {
-      // Handle loading state if needed
-    } else if (bookingStatus === 'fulfilled' && roomStatus === 'fulfilled') {
-      // Handle both data being loaded
-    } else if (bookingStatus === 'rejected') {
-      alert(error);
+    if (roomStatus === 'idle') {
+      dispatch(getRoomListThunk());
+    } else if (roomStatus === 'pending') {
+      setIsLoading(true);
+    } else if (roomStatus === 'fulfilled') {
+      setIsLoading(false);
     } else if (roomStatus === 'rejected') {
-      alert(error);
+      setError(roomError);
+      alert(roomError);
     }
-  }, [bookingStatus, roomStatus, error]);
+  }, [roomStatus, roomDataList, dispatch, roomError]);
 
-  const allBookingsCount = bookings.length;
-  const totalRooms = rooms.length;
-  const occupiedRooms = rooms.filter(room => !room.available).length;
+  const allBookingsCount = bookingDataList.length;
+  const totalRooms = roomDataList.length;
+  const occupiedRooms = roomDataList.filter(room => !room.available).length;
   const occupationRate = ((occupiedRooms / totalRooms) * 100).toFixed(2) + "%";
-  const checkInCount = bookings.filter(booking => booking.status === "Check In").length;
-  const checkOutCount = bookings.filter(booking => booking.status === "Check Out").length;
+  const checkInCount = bookingDataList.filter(booking => booking.status === "Check In").length;
+  const checkOutCount = bookingDataList.filter(booking => booking.status === "Check Out").length;
 
   return (
     <div>

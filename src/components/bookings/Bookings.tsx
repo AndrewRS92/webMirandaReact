@@ -15,25 +15,27 @@ import {
   PaginationButton,
   PaginationInfo
 } from './BookingTableStyles';
-
-interface Booking {
-  guest: string;
-  orderdate: string;
-  checkin: string;
-  checkout: string;
-  specialRequest: string;
-  roomtype: string;
-  status: string;
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../features/store';
+import { getBookingListThunk } from '../../features/slices/bookings/bookingThunk';
+import {
+  bookingDataListSelector,
+  bookingStatusSelector,
+  bookingErrorSelector
+} from '../../features/slices/bookings/bookingSlice';
+import { Booking } from '../../types';
 
 const Bookings: React.FC = () => {
-  const [tableData, setTableData] = useState<Booking[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const bookingDataList = useSelector(bookingDataListSelector);
+  const bookingStatus = useSelector(bookingStatusSelector);
+  const bookingError = useSelector(bookingErrorSelector);
+
   const [filter, setFilter] = useState<string>('all');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [list, setList] = useState<Booking[]>([]);
   const [pages, setPages] = useState<Booking[][]>([]);
-  const [status, setStatus] = useState<string>('idle');
   const [error, setError] = useState<string | null>(null);
 
   const itemsPerPage = 10;
@@ -47,42 +49,26 @@ const Bookings: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setStatus('pending');
-      try {
-        const response = await fetch('/BookingsData.json');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data: Booking[] = await response.json();
-        setTableData(data);
-        setList(data);
-        setPages(createPagination(data, itemsPerPage));
-        setStatus('fulfilled');
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setError('Error fetching data');
-        setStatus('rejected');
-      }
-    };
-
-    if (status === 'idle') {
-      fetchData();
-    } else if (status === 'pending') {
+    if (bookingStatus === 'idle') {
+      dispatch(getBookingListThunk());
+    } else if (bookingStatus === 'pending') {
       setIsLoading(true);
-    } else if (status === 'fulfilled') {
+    } else if (bookingStatus === 'fulfilled') {
+      setList(bookingDataList);
+      setPages(createPagination(bookingDataList, itemsPerPage));
       setIsLoading(false);
-    } else if (status === 'rejected') {
-      alert(error);
+    } else if (bookingStatus === 'rejected') {
+      setError(bookingError);
+      setIsLoading(false);
     }
-  }, [status, tableData, error]);
+  }, [bookingStatus, bookingDataList, dispatch, bookingError]);
 
   const handleFilterChange = (newFilter: string): void => {
     setFilter(newFilter);
     setCurrentPage(1);
-    const filteredData = tableData.filter(row => {
+    const filteredData = bookingDataList.filter((row: Booking) => {
       if (newFilter === 'all') return true;
-      return row.status.toLowerCase() === newFilter;
+      return row.status.toLowerCase() === newFilter.toLowerCase();
     });
     setList(filteredData);
     setPages(createPagination(filteredData, itemsPerPage));

@@ -1,11 +1,16 @@
 import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 
-
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   password: string;
+  photo: string;
+  workstation: string;
+  number_phone: string;
+  start_date: string;
+  description: string;
+  state: boolean;
 }
 
 interface UserContextType {
@@ -43,17 +48,26 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const response = await fetch('/users.json');
-    const users: User[] = await response.json();
+    try {
+      const response = await fetch('/src/asset/users.json');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const users: User[] = await response.json();
+      console.log('Fetched users:', users);
 
-    const user = users.find((user) => user.email === email && user.password === password);
+      const user = users.find((user) => user.email === email && user.password === password);
 
-    if (user) {
-      setUser(user);
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      return true;
+      if (user) {
+        setUser(user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return false;
     }
-    return false;
   };
 
   const logout = () => {

@@ -84,28 +84,12 @@ export const FilterOption = styled.button`
   }
 `;
 
-export const EmployeeStatus = styled.p`
-  width: 6rem;
-  text-align: center;
-  padding: 0.5rem;
-  font-weight: 300;
-  border-radius: 0.5rem;
-  ${({ status }) => {
-    switch (status.toLowerCase()) {
-      case 'active':
-        return `
-          color: #ffffff;
-          background-color: #5AD07A;
-          font-weight: bold;
-        `;
-      case 'inactive':
-        return `
-          color: #ffffff;
-          background-color: #E23428;
-          font-weight: bold;
-        `;
-      default:
-        return '';
-    }
-  }}
+interface EmployeeStatusProps {
+  status: 'active' | 'inactive';
+}
+
+export const EmployeeStatus = styled.span<EmployeeStatusProps>`
+  color: ${props => (props.status === 'active' ? 'green' : 'red')};
+  font-weight: bold;
 `;
+
